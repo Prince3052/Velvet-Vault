@@ -38,4 +38,19 @@ In Scope
 <img width="1063" height="598" alt="image" src="https://github.com/user-attachments/assets/367db427-fa2b-435d-b6fe-cb20bda3c4cb" />
 <img width="1063" height="598" alt="image" src="https://github.com/user-attachments/assets/24863262-bee1-4ead-841a-d2e8c7d51d83" />
 
+**Installation**
+Clone the repository:
+https://github.com/Prince3052/Velvet-Vault/
 
+**Running the Project**
+Write these commands in terminal
+cd myproject
+python manage.py runserver
+copy the URL and past in browser
+
+**Author**
+Prince
+GitHub: https://github.com/Prince3052/
+
+**License**
+This project is created for learning and educational purposes.
