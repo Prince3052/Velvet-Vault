@@ -42,11 +42,27 @@ In Scope
 Clone the repository:
 https://github.com/Prince3052/Velvet-Vault/
 
-**Running the Project**
-Write these commands in terminal
-cd myproject
+**How to Run This Project**
+ 
+### 1. Clone the repository
+git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+### 2. Go to the project directory
+cd YOUR_REPOSITORY
+### 3. Create a virtual environment
+python -m venv venv
+### 4. Activate the virtual environment
+Windows:
+venv\Scripts\activate
+macOS/Linux:
+source venv/bin/activate
+### 5. Install dependencies
+pip install -r requirements.txt
+### 6. Apply migrations
+python manage.py migrate
+### 7. Run the development server
 python manage.py runserver
-copy the URL and past in browser
+### 8. Open the website
+http://127.0.0.1:8000/
 
 **Author**
 Prince
