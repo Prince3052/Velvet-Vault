@@ -1,7 +1,7 @@
-**Velvet Vault:- **
+**Velvet Vault**
 The Velvet Vault is a full-stack web-based e-commerce application developed using Django, HTML, CSS, JavaScript, and MySQL that aims to simplify and enhance the online jewellery shopping experience. The system provides users with a centralized platform to browse, select, and purchase jewellery products and efficiently.
 
-**Scope of the Project:- **
+**Scope of the Project**
 The scope of the Velvet Vault Jewellery E-commerce system defines what the application will and will not cover.
 In Scope
 •	User authentication (registration and login system) 
@@ -11,7 +11,7 @@ In Scope
 •	Order placement using Cash on Delivery (COD) 
 •	Admin panel for managing products and orders
 
-**Tools and Technologies Used:- **
+**Tools and Technologies Used**
 **Frontend**
 •	HTML 
 •	CSS (Tailwind CSS for styling)
