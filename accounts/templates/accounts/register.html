@@ -1,0 +1,57 @@
+{% extends "store/master.html" %}
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+  {% for message in messages %}
+  <div class="p-4 mb-4 text-sm text-fg-success-strong rounded-base bg-success-soft" role="alert">
+    <span class="font-medium">Success alert!</span>{{ message }}.
+  </div>
+  {% endfor %}
+{% endif %}
+
+<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+  <div class="w-full max-w-2xl bg-gray-50 p-12 rounded-sm shadow-sm">
+
+    <!-- Title -->
+    <h1 class="text-5xl font-light text-[#4C5D7D] text-center mb-4">
+      Sign Up
+    </h1>
+
+    <p class="text-center text-[#4C5D7D] mb-10">
+      Already have an account?
+      <a href="{% url 'login' %}" class="text-[#4C5D7D] hover:text-[#cd865c] transition duration-500">
+        Sign In
+      </a>
+    </p>
+
+    <!-- Form -->
+    <form method="POST" class="space-y-6">
+      {% csrf_token %}
+
+      <input type="text" name="first_name" placeholder="First name"
+        class="w-full border border-[#4C5D7D] bg-white px-4 py-3 focus:outline-none focus:border-[#cd865c] transition duration-500 text-[#4C5D7D]">
+
+      <input type="text" name="last_name" placeholder="Last name"
+        class="w-full border border-[#4C5D7D] bg-white px-4 py-3 focus:outline-none focus:border-[#cd865c] transition duration-500 text-[#4C5D7D]">
+
+      <input type="email" name="email" placeholder="Email *"
+        class="w-full border border-[#4C5D7D] bg-white px-4 py-3 focus:outline-none focus:border-[#cd865c] transition duration-500 text-[#4C5D7D]">
+
+      <input type="password" name="password" placeholder="Password *"
+        class="w-full border border-[#4C5D7D] bg-white px-4 py-3 focus:outline-none focus:border-[#cd865c] transition duration-500 text-[#4C5D7D]">
+
+      <!-- Button -->
+      <div class="text-center pt-6">
+        <button type="submit"
+          class="border border-[#4C5D7D] text-[#4C5D7D] px-10 py-3 hover:bg-[#4C5D7D] hover:text-white transition duration-500">
+          CREATE
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

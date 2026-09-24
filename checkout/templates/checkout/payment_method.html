@@ -1,0 +1,75 @@
+{% extends "store/master.html" %}
+{% load static %}
+
+{% block content %}
+<section class="my-10 py-10">
+    <div class="container mx-auto">
+<h2 class="text-xl text-[#4c5d7d] font-bold mb-4">Select Payment Method</h2>
+
+<button onclick="placeOrder('COD')"
+    class="w-full mb-3 bg-green-600 text-white py-3 rounded">
+    Cash on Delivery
+</button>
+
+<button onclick="placeOrder('ONLINE')"
+    class="w-full bg-blue-600 text-white py-3 rounded">
+    Pay Online (Razorpay)
+</button>
+    </div>
+</section>
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+function placeOrder(method) {
+    fetch('/place-order/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({
+            payment_method: method
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === "success") {
+            Swal.fire({
+                title: "Order Confirmed",
+                text: "Your order has been placed successfully!",
+                icon: "success",
+                confirmButtonText: "OK"
+            }).then(() => {
+                window.location.href = "/orders/";
+            });
+        }
+    });
+}
+
+function startRazorpay(data) {
+
+    var options = {
+        "key": "{{ razorpay_key }}",  // from backend
+        "amount": 50000, // replace with dynamic amount (in paise)
+        "currency": "INR",
+        "name": "Your Store",
+        "description": "Order Payment",
+
+        "handler": function (response) {
+            alert("Payment Successful 🎉");
+
+            // redirect after success
+            window.location.href = "/orders/";
+        },
+
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+}
+</script>
+{% endblock %}

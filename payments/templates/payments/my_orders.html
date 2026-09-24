@@ -1,0 +1,23 @@
+<h2>My Orders</h2>
+
+{% if orders %}
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>Product</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.product.name }}</td>
+            <td>₹{{ order.amount|floatformat:2 }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.created_at }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No orders yet.</p>
+{% endif %}

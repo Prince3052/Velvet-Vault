@@ -1,0 +1,258 @@
+{% extends "store/master.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <p class="text-sm tracking-[4px] text-[#cd865c] uppercase mb-6" data-aos="fade-right" >
+      Fine Jewellery
+    </p>
+    <h1 class="text-4xl md:text-6xl font-light text-[#4c5d7d] leading-tight max-w-4xl" data-aos="fade-right" data-aos-delay="450">
+      The Most Exquisite And Opulent Designer Jewelry
+    </h1>
+    <div class="border-b border-dashed border-slate-400 my-12 w-full"></div>
+    <div class="flex flex-col md:flex-row items-center gap-12">
+      <div class="md:w-1/2 w-full">
+        <img src="{% static 'images/about.jpg' %}" 
+             alt="Designer Jewelry" 
+             class="w-full h-auto object-cover">
+      </div>
+      <div class="md:w-1/2 w-full">
+        <p class="text-[#4c5d7d] text-lg leading-relaxed mb-6" data-aos="fade-up" data-aos-delay="300">
+          Eget gravida cum sociis natoque penatibus et magnis dis parturient.
+          Mi proin sed libero enim sed faucibus. Dui accumsan sit amet nulla
+          facilisi morbi tempus iaculis urna.
+        </p>
+        <p class="text-[#4c5d7d] text-lg leading-relaxed mb-10" data-aos="fade-up" data-aos-delay="450">
+          Rhoncus urna neque viverra justo nec. Ultrices tincidunt arcu non
+          sodales. Nec sagittis aliquam malesuada.
+        </p>
+        <a href="#"
+           class="inline-block border border-slate-500 px-10 py-4 text-[#4c5d7d] tracking-wider uppercase hover:bg-[#4c5d7d] hover:text-white transition duration-500" data-aos="fade-up" data-aos-delay="600">
+          Shop Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--banner section-->
+<section class="banner-section bg-cover" style="background-image: url('{% static "images/bannerbg.jpg" %}');">
+    <div class="flex flex-col md:flex-row">
+        <div class="md:w-1/2 w-full" data-aos="fade" data-aos-duration="1500" data-aos-easing="linear">
+            <img src="{% static "/images/banner1.jpg" %}" alt="" class="w-full h-auto cover">
+        </div>
+        <div class="md:w-1/2 w-full flex items-center ">
+            <div class="text-content px-6 py-4 md:py-0 md:px-8">
+                <span class="md:mt-0 mt-2 mb-4 block text-sm tracking-[4px] text-[#cd865c] uppercase" data-aos="fade-right">PRECISION IN EVERY INCH</span>
+
+                <h3 class="md:mb-8 mb-4 text-3xl md:text-4xl font-light text-[#4c5d7d] leading-tight max-w-3xl" data-aos="fade-right">Discover Your Precious Design</h3>
+                <p class="mb-6 text-[#4c5d7d] text-lg leading-relaxed" data-aos="fade-up" data-aos-delay="300">Congue quisque egestas diam in arcu cursus. Orci a scelerisque purus semper eget duis at. Sit amet venenatis urna cursus. Libero enim sed faucibus turpis. Et odio pellentesque diam volutpat commodo. A iaculis at erat pellentesque adipiscing. Feugiat nibh sed pulvinar proin.Egestas quis ipsum</p>
+
+                <a href="#" class="inline-block border border-[#4c5d7d] px-10 py-4 text-slate-600 tracking-wider uppercase hover:bg-[#4c5d7d] hover:text-white transition duration-500" data-aos="fade-up" data-aos-delay="450">Book an appointment</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- service section -->
+ <section class="service-section bg-cover" style="background-image: url('{% static "images/bannerbg2.jpg" %}');">
+    <div class="flex flex-wrap">
+        <div class="md:w-1/2  px-6 py-4 md:pl-8 md:px-0 md:py-0 w-100 flex flex-col justify-center" data-aos="fade-right">
+            <span class="md:mt-0 mt-2 mb-4 block text-sm tracking-[4px] text-[#cd865c] uppercase">Get In Touch</span>
+            <h3 class="md:mb-10 mb-4 text-3xl md:text-4xl font-light text-[#4c5d7d] leading-tight">Our Service</h3>
+
+            <div class="icon-text-block flex gap-8 mb-5" data-aos="fade-up" data-aos-delay="300">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 84 72" height="48" width="48">
+                  <path fill="#4C5D7D" d="M83.9712 41.8895C83.9692 41.8803 83.9661 41.8711 83.9641 41.8619C83.962 41.8537 83.96 41.8466 83.9569 41.8384C83.9508 41.82 83.9446 41.8016 83.9375 41.7832C83.9365 41.7791 83.9344 41.776 83.9334 41.772C83.9181 41.7321 83.8997 41.6932 83.8782 41.6564C83.8772 41.6544 83.8761 41.6523 83.8741 41.6503C83.8618 41.6299 83.8496 41.6094 83.8363 41.589C83.8342 41.5859 83.8322 41.5839 83.8302 41.5808L73.6605 27.0276C72.6433 25.5729 70.977 24.7039 69.2023 24.7039H60.4434V21.2292C60.4434 20.718 60.0293 20.303 59.5172 20.303H19.2985C18.7874 20.303 18.3723 20.718 18.3723 21.2292C18.3723 21.7403 18.7874 22.1554 19.2985 22.1554H58.592V25.6301V56.6298H32.9266C32.4809 53.8206 30.0427 51.6666 27.1108 51.6666C24.1789 51.6666 21.7407 53.8206 21.295 56.6298H19.2985C18.7874 56.6298 18.3723 57.0438 18.3723 57.556C18.3723 58.0672 18.7874 58.4822 19.2985 58.4822H21.295C21.7407 61.2914 24.1789 63.4454 27.1108 63.4454C30.0427 63.4454 32.4809 61.2914 32.9266 58.4822H59.5182H65.4802C65.9259 61.2914 68.364 63.4454 71.2959 63.4454C74.2278 63.4454 76.666 61.2914 77.1117 58.4822H83.0737C83.5848 58.4822 83.9998 58.0682 83.9998 57.556V42.1144C83.9998 42.0388 83.9896 41.9631 83.9712 41.8895ZM72.1444 28.0887L81.2969 41.1862H65.5558V26.5563H69.2033C70.3738 26.5563 71.4738 27.1298 72.1444 28.0887ZM27.1108 61.594C24.8843 61.594 23.0738 59.7825 23.0738 57.557C23.0738 55.3305 24.8853 53.52 27.1108 53.52C29.3363 53.52 31.1478 55.3315 31.1478 57.557C31.1478 59.7825 29.3373 61.594 27.1108 61.594ZM71.2959 61.594C69.0694 61.594 67.2589 59.7825 67.2589 57.557C67.2589 55.3305 69.0704 53.52 71.2959 53.52C73.5225 53.52 75.3329 55.3315 75.3329 57.557C75.3339 59.7825 73.5225 61.594 71.2959 61.594ZM77.1127 56.6308C76.667 53.8216 74.2289 51.6677 71.2969 51.6677C68.365 51.6677 65.9269 53.8216 65.4812 56.6308H60.4454V26.5563H63.7044V42.1124C63.7044 42.6235 64.1185 43.0386 64.6306 43.0386H82.1495V56.6308H77.1127Z"></path>
+                  <path fill="#4C5D7D" d="M72.9267 45.4829H68.63C68.1189 45.4829 67.7039 45.8969 67.7039 46.4091C67.7039 46.9202 68.1179 47.3353 68.63 47.3353H72.9267C73.4378 47.3353 73.8529 46.9213 73.8529 46.4091C73.8519 45.8969 73.4378 45.4829 72.9267 45.4829Z"></path>
+                  <path fill="#4C5D7D" d="M34.0369 48.1857C34.0369 47.6746 33.6218 47.2595 33.1107 47.2595H5.85148C5.34034 47.2595 4.92529 47.6746 4.92529 48.1857C4.92529 48.6969 5.34034 49.1119 5.85148 49.1119H33.1107C33.6228 49.1119 34.0369 48.6979 34.0369 48.1857Z"></path>
+                  <path fill="#4C5D7D" d="M40.1113 39.4085C40.1113 38.8973 39.6963 38.4823 39.1851 38.4823H0.926189C0.415047 38.4823 0 38.8963 0 39.4085C0 39.9196 0.415047 40.3347 0.926189 40.3347H39.1851C39.6963 40.3347 40.1113 39.9196 40.1113 39.4085Z"></path>
+                  <path fill="#4C5D7D" d="M11.7409 29.7417H35.1113C35.6225 29.7417 36.0375 29.3276 36.0375 28.8155C36.0375 28.3043 35.6225 27.8893 35.1113 27.8893H11.7409C11.2297 27.8893 10.8147 28.3033 10.8147 28.8155C10.8147 29.3266 11.2297 29.7417 11.7409 29.7417Z"></path>
+                  <path fill="#4C5D7D" d="M47.7406 19.297C48.2518 19.297 48.6668 18.882 48.6668 18.3709C48.6668 13.1225 52.9369 8.85237 58.1853 8.85237C63.4337 8.85237 67.7038 13.1225 67.7038 18.3709C67.7038 19.6416 67.4574 20.8755 66.9718 22.0378C66.7745 22.5101 66.9974 23.0519 67.4697 23.2492C67.5862 23.2983 67.7069 23.3208 67.8265 23.3208C68.1884 23.3208 68.5329 23.1071 68.6811 22.7513C69.2618 21.3621 69.5562 19.8879 69.5562 18.3709C69.5562 15.3337 68.3734 12.4784 66.2256 10.3306C64.0778 8.18278 61.2225 7 58.1853 7C55.1481 7 52.2929 8.18278 50.1451 10.3306C47.9972 12.4784 46.8145 15.3337 46.8145 18.3709C46.8155 18.883 47.2295 19.297 47.7406 19.297Z"></path>
+                  <path fill="#4C5D7D" d="M58.1852 9.96362C57.6741 9.96362 57.259 10.3787 57.259 10.8898V18.3709C57.259 18.882 57.6741 19.2971 58.1852 19.2971H64.6297C65.1408 19.2971 65.5559 18.882 65.5559 18.3709C65.5559 17.8597 65.1408 17.4447 64.6297 17.4447H59.1114V10.8888C59.1114 10.3787 58.6964 9.96362 58.1852 9.96362Z"></path>
+                </svg>
+            <div>
+                <h5 class="text-[#4c5d7d] font-semibold mb-3 text-xl">FREE SHIPPING</h5>
+                <p class="text-[#4c5d7d]">Enim sed faucibus turpis in eu mi bibendum neque.</p>
+            </div>
+            </div>
+
+                        <div class="icon-text-block flex gap-8 mb-5" data-aos="fade-up" data-aos-delay="450">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 84 72" height="48" width="48">
+  <path fill="#4C5D7D" d="M60.5581 44.8263V42.4202C65.3497 41.4948 65.3702 34.1531 59.4476 34.1531C58.1314 34.1531 57.0621 33.0837 57.0621 31.7676C57.0621 27.7986 62.3883 28.0659 62.3883 31.5002C62.3883 32.693 64.0335 32.5696 64.0335 31.5002C64.0335 29.4026 62.5323 27.6546 60.5375 27.2639V24.8372C60.5375 23.7473 58.8923 23.7473 58.8923 24.8372V27.2433C54.2652 28.1276 53.8539 35.7777 60.0028 35.7777C62.1621 35.7777 63.2315 38.41 61.6069 40.0552C60.0028 41.6798 57.0621 40.5693 57.0621 38.1632C57.0621 37.7108 56.6713 37.2584 56.0955 37.3612C54.5326 37.6286 55.6636 41.7621 58.8923 42.3996V44.8057C58.8923 45.8956 60.5375 45.8956 60.5375 44.8057L60.5581 44.8263Z"></path>
+  <path fill="#4C5D7D" d="M77.7919 12.128C78.6762 12.128 78.5528 11.6756 79.6839 6.4521C79.9101 5.4033 78.306 5.01256 78.0798 6.1025L77.5246 8.67311C68.949 -0.0258233 55.7464 -2.51417 44.5385 2.72987C43.5514 3.18229 44.2506 4.68353 45.2378 4.21054C56.1577 -0.889547 68.805 1.80445 76.7636 10.236L72.9592 9.41344C71.9309 9.1461 71.5196 10.7913 72.6096 11.0175C77.2778 12.0252 77.6068 12.128 77.8125 12.128H77.7919Z"></path>
+  <path fill="#4C5D7D" d="M72.9589 51.2836C66.008 56.3631 56.6715 58.1111 47.6847 54.9647V43.6952C56.3014 55.3349 74.7275 49.2065 74.7275 34.8317C74.7275 30.1635 72.527 25.7626 68.8253 22.9452C68.4963 10.5652 54.0804 3.94332 44.456 11.6963C43.6334 11.4906 44.3943 11.5729 21.9786 11.5729C19.6548 11.5729 17.7629 13.4648 17.7629 15.7887V38.2455L16.3027 38.9447C12.7656 40.6516 10.4623 44.3121 10.4623 48.2606V53.1139C3.059 58.0083 3.03843 57.8232 3.03843 58.4607C3.03843 70.9025 2.72994 70.9436 3.86101 70.9436C18.5032 70.9436 15.4184 71.4783 18.2153 69.2573C26.5029 69.2573 29.238 69.9359 33.5772 66.625H43.4483C45.7722 66.625 47.6641 64.733 47.6641 62.4092V56.6921C57.0417 59.7769 66.6866 57.8438 73.9049 52.5997C74.7892 51.9622 73.8226 50.6255 72.9383 51.263L72.9589 51.2836ZM41.0217 47.1912C36.0244 46.1012 35.2635 45.6488 35.0168 46.7182C33.8446 52.0445 33.5361 52.4969 34.5438 52.7231C35.5309 52.9699 35.5514 52.0034 36.0861 49.5356C38.9241 52.4352 42.2967 54.6768 46.0395 56.1369V62.4297C46.0395 63.8487 44.8879 65.0003 43.4689 65.0003C19.9016 65.0003 20.7859 65.535 19.5931 63.3963C19.3052 63.5402 19.408 59.5507 19.408 49.4122L28.3537 41.3302C35.3047 41.2068 40.5281 35.716 37.9987 33.8035C37.3612 33.166 36.847 33.3305 28.0247 33.3305C27.7368 33.3305 27.9836 33.2688 19.3875 37.4229V15.7681C19.3875 14.3491 20.5391 13.1975 21.9581 13.1975H42.8314C36.847 19.696 37.7313 29.8345 44.7439 35.2019C44.7851 37.2172 45.2375 39.1298 46.0189 40.8778V54.3066C42.564 52.8465 39.4793 50.6872 36.8676 47.9315C40.0551 48.6307 41.3713 49.2682 41.6387 48.1372C41.7415 47.6847 41.4535 47.2529 41.0011 47.1501L41.0217 47.1912ZM26.3178 67.6326C15.9737 67.6326 18.3387 67.098 15.5419 69.319H4.70418V58.9337L11.7579 54.2655C13.218 53.2989 9.51635 44.0859 17.0431 40.4459L28.2509 35.0168C37.6902 35.0168 36.6825 34.9757 36.9704 35.0991C37.3406 35.4281 35.6337 37.0322 35.243 37.3612C31.8292 40.1991 28.0453 39.4588 27.5106 39.9318C17.1665 49.2477 17.7834 48.569 17.7834 49.0626C17.7834 68.373 15.8092 66.6661 30.5542 66.6661C29.238 67.3036 27.7779 67.6326 26.3178 67.6326ZM46.1218 12.5394C54.3888 6.61675 65.9669 11.7991 67.1185 21.8553C57.5764 16.4262 46.0395 22.7807 44.8673 33.1865C38.6567 27.4901 39.1914 17.5161 46.1218 12.5394ZM47.7053 40.5282C41.7826 28.0453 56.8772 15.6447 67.9822 24.3848C77.915 32.22 72.3625 48.1783 59.7357 48.1783C54.4094 48.1783 49.8234 45.0524 47.6847 40.5282H47.7053Z"></path>
+</svg>
+            <div>
+                <h5 class="text-[#4c5d7d] font-semibold mb-3 text-xl">FREE SHIPPING</h5>
+                <p class="text-[#4c5d7d]">Enim sed faucibus turpis in eu mi bibendum neque.</p>
+            </div>
+            </div>
+
+                        <div class="icon-text-block flex gap-8 mb-5" data-aos="fade-up" data-aos-delay="600">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 84 72" height="48" width="48">
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M42.0013 69.9999L55.7141 37.2334H28.2886L42.0013 69.9999Z" clip-rule="evenodd" fill-rule="evenodd"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M42.0013 23.537L55.7141 37.2334H28.2886L42.0013 23.537Z" clip-rule="evenodd" fill-rule="evenodd"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M55.7143 37.2334L61.3552 20.1184L42.0015 23.5371L55.7143 37.2334Z" clip-rule="evenodd" fill-rule="evenodd"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M28.2883 37.2334L22.6472 20.1184L42.001 23.5371L28.2883 37.2334Z" clip-rule="evenodd" fill-rule="evenodd"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M22.6472 20.1181L42.001 16.0981L61.3548 20.1181"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M42.0011 69.9997L10.6379 33.3083"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M42.0015 70L73.3646 33.6053"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M28.2884 37.2334L10.6379 33.2079L22.6473 20.1184"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M55.7141 37.2334L73.3645 33.2079L61.3551 20.1184"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M42.0015 1V9.18592"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M42.0015 1V9.18592"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M61.6889 5.09302L57.5959 12.1822"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M76.2103 19.3257L69.1211 23.4186"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M22.4434 5.09302L26.5363 12.1822"></path>
+  <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="1.5" stroke-width="1.4" stroke="#4C5D7D" d="M7.66309 19.3257L14.7523 23.4186"></path>
+</svg>
+
+            <div>
+                <h5 class="text-[#4c5d7d] font-semibold mb-3 text-xl">FREE SHIPPING</h5>
+                <p class="text-[#4c5d7d] ">Enim sed faucibus turpis in eu mi bibendum neque.</p>
+            </div>
+            </div>
+        </div>
+        <div class="md:w-1/2 w-100">
+            <div class="w-full" data-aos="fade" data-aos-duration="1500" data-aos-easing="linear">
+              <img src="{% static "/images/videobanner.jpg" %}" alt="" class="w-full h-auto cover">
+            </div>
+        </div>
+    </div>
+ </section>
+
+<!--Team Section-->
+<section class="team-section py-10 relative">
+  <img src="{% static '/images/hexagon.png' %}" alt="" class="absolute right-0 top-0 max-w-[500px] w-full h-[600px]">
+  <div class="container mx-auto">
+    <span class="block text-center md:mt-0 mt-2 mb-4 block text-sm tracking-[4px] text-[#cd865c] uppercase">MEET OUR</span>
+    <h3 class="text-center md:mb-10 mb-4 text-3xl md:text-4xl font-light text-[#4c5d7d] leading-tight ">Successful Team</h3>
+
+    <div class="carousel" id="myCarousel" data-flickity='{ "contain": true, "prevNextButtons": false, "pageDots": false, "cellAlign": "left" }'>
+      {% for member in members %}
+      <div class="carousel-cell w-[80%] md:w-[40%] lg:w-[28.57%] h-auto mr-6 bg-[#ECECEC]">
+        <img src="{{ member.bgImage.url }}" alt="{{ member.name }}" class="cover">
+        <div class="member-text text-center pt-[80px] pb-6 relative">
+          <div class="absolute w-[150px] h-[150px] translate-x-[-50%] translate-y-[50%] left-1/2 bottom-full">
+                  <img src="{{ member.image.url }}" 
+             alt="{{ member.name }}"
+             class="w-full h-full rounded-full border-4 border-white">
+          </div>
+          <h4 class="text-2xl text-[#4c5d7d] font-medium mb-3">{{ member.name }}</h4>
+          <p class="text-lg text-[#cd865c] uppercase mb-7 leading-7">{{ member.role }}</p>
+          <span class="block uppercase text-[#4c5d7d]">{{ member.experience }} Years of experience</span>
+
+          <ul class="flex gap-4 justify-center mt-4">
+            <li class="list-social__item">
+                    <a href="#" class="link list-social__link"><svg class="icon icon-twitter" width="16" height="16" viewBox="0 0 20 18" fill="#4c5d7d" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#4c5d7d" d="M0.0468725 0L7.47201 9.92802L0 18H1.68166L8.22336 10.9329L13.5089 18H19.2316L11.3887 7.51356L18.3436 0H16.6619L10.6373 6.50867L5.76958 0H0.0468725ZM2.51982 1.23871H5.14884L16.7582 16.7611H14.1292L2.51982 1.23871Z"></path>
+</svg><span class="visually-hidden"></span>
+                    </a>
+                  </li>
+                  <li class="list-social__item">
+                    <a href="#" class="link list-social__link"><svg aria-hidden="true" focusable="false"  width="16" height="16" role="presentation" class="icon icon-facebook" viewBox="0 0 18 18">
+                    <path fill="#4c5d7d" d="M16.42.61c.27 0 .5.1.69.28.19.2.28.42.28.7v15.44c0 .27-.1.5-.28.69a.94.94 0 01-.7.28h-4.39v-6.7h2.25l.31-2.65h-2.56v-1.7c0-.4.1-.72.28-.93.18-.2.5-.32 1-.32h1.37V3.35c-.6-.06-1.27-.1-2.01-.1-1.01 0-1.83.3-2.45.9-.62.6-.93 1.44-.93 2.53v1.97H7.04v2.65h2.24V18H.98c-.28 0-.5-.1-.7-.28a.94.94 0 01-.28-.7V1.59c0-.27.1-.5.28-.69a.94.94 0 01.7-.28h15.44z">
+                    </path></svg>
+                    <span class="visually-hidden"></span>
+                    </a>
+                  </li>
+                  <li class="list-social__item">
+                    <a href="#" class="link list-social__link"><svg aria-hidden="true" focusable="false" width="16" height="16" role="presentation" class="icon icon-pinterest" viewBox="0 0 17 18">
+                      <path fill="#4c5d7d" d="M8.48.58a8.42 8.42 0 015.9 2.45 8.42 8.42 0 011.33 10.08 8.28 8.28 0 01-7.23 4.16 8.5 8.5 0 01-2.37-.32c.42-.68.7-1.29.85-1.8l.59-2.29c.14.28.41.52.8.73.4.2.8.31 1.24.31.87 0 1.65-.25 2.34-.75a4.87 4.87 0 001.6-2.05 7.3 7.3 0 00.56-2.93c0-1.3-.5-2.41-1.49-3.36a5.27 5.27 0 00-3.8-1.43c-.93 0-1.8.16-2.58.48A5.23 5.23 0 002.85 8.6c0 .75.14 1.41.43 1.98.28.56.7.96 1.27 1.2.1.04.19.04.26 0 .07-.03.12-.1.15-.2l.18-.68c.05-.15.02-.3-.11-.45a2.35 2.35 0 01-.57-1.63A3.96 3.96 0 018.6 4.8c1.09 0 1.94.3 2.54.89.61.6.92 1.37.92 2.32 0 .8-.11 1.54-.33 2.21a3.97 3.97 0 01-.93 1.62c-.4.4-.87.6-1.4.6-.43 0-.78-.15-1.06-.47-.27-.32-.36-.7-.26-1.13a111.14 111.14 0 01.47-1.6l.18-.73c.06-.26.09-.47.09-.65 0-.36-.1-.66-.28-.89-.2-.23-.47-.35-.83-.35-.45 0-.83.2-1.13.62-.3.41-.46.93-.46 1.56a4.1 4.1 0 00.18 1.15l.06.15c-.6 2.58-.95 4.1-1.08 4.54-.12.55-.16 1.2-.13 1.94a8.4 8.4 0 01-5-7.65c0-2.3.81-4.28 2.44-5.9A8.04 8.04 0 018.48.57z">
+                      </path></svg>
+                      <span class="visually-hidden"></span>
+                    </a>
+                  </li>
+          </ul>
+        </div>
+      </div>
+{% endfor %}
+    </div>
+    <button id="nextBtn" class="absolute right-[10%] top-[10%] bg-black text-white p-6">→</button>
+  </div>
+</section>
+
+<!--Image grid-->
+<section>
+  <div class="carousel md:flex md:flex-wrap md:gap-0" id="mobileSlider">
+
+    <div class="carousel-cell w-1/2 md:w-1/6">
+      <img src="{% static 'images/gridimg1.jpg' %}" class="w-full transition-opacity cursor-pointer
+ duration-500 hover:opacity-40" alt="">
+    </div>
+
+    <div class="carousel-cell w-1/2 md:w-1/6">
+      <img src="{% static 'images/gridimg2.jpg' %}" class="w-full transition-opacity cursor-pointer
+ duration-500 hover:opacity-40" alt="">
+    </div>
+
+    <div class="carousel-cell w-1/2 md:w-1/6">
+      <img src="{% static 'images/gridimg3.jpg' %}" class="w-full transition-opacity cursor-pointer
+ duration-500 hover:opacity-40" alt="">
+    </div>
+
+    <div class="carousel-cell w-1/2 md:w-1/6">
+      <img src="{% static 'images/gridimg4.jpg' %}" class="w-full transition-opacity cursor-pointer
+ duration-500 hover:opacity-40" alt="">
+    </div>
+
+    <div class="carousel-cell w-1/2 md:w-1/6">
+      <img src="{% static 'images/gridimg5.jpg' %}" class="w-full transition-opacity cursor-pointer
+ duration-500 hover:opacity-40" alt="">
+    </div>
+
+    <div class="carousel-cell w-1/2 md:w-1/6">
+      <img src="{% static 'images/gridimg6.jpg' %}" class="w-full transition-opacity cursor-pointer
+ duration-500 hover:opacity-40" alt="">
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+        document.body.classList.add("fade-in");
+
+  var flkty = new Flickity('#myCarousel', {
+    contain: true,
+    selectedAttraction: 0.015,
+  });
+
+  var nextBtn = document.getElementById('nextBtn');
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function() {
+      flkty.next();
+    });
+  }
+
+  function initMobileSlider() {
+    if (window.innerWidth < 768) {
+
+      if (!window.mobileFlickity) {
+        window.mobileFlickity = new Flickity('#mobileSlider', {
+          contain: true,
+          prevNextButtons: false,
+          pageDots: false,
+          cellAlign: 'left'
+        });
+      }
+
+    } else {
+
+      if (window.mobileFlickity) {
+        window.mobileFlickity.destroy();
+        window.mobileFlickity = null;
+      }
+
+    }
+  }
+
+  initMobileSlider();
+  window.addEventListener("resize", initMobileSlider);
+});
+</script>
+{% endblock %}

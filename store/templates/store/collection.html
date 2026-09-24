@@ -1,0 +1,63 @@
+{% extends "store/master.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="our-product-section py-20 px-0">
+  <div class="container mx-auto px-4">
+    <p class="product-caption text-[#cd865c] tracking-[1.5px] leading-normal text-base font-medium text-center">
+      UNIQUE
+    </p>
+    <h2 class="product-title font-['Proza_Libre'] text-[45px] text-center text-[#4c5d7d] font-normal mb-[25px]">
+      Our Products
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+      {% for product in products|slice:":8" %}
+      <div class="product-card group text-center flex-[0_0_calc(25%-20px)] text-[#4c5d7d] overflow-hidden transition-all duration-500 ease-in-out">
+        
+        <div class="product-hover-main relative overflow-hidden">
+          {% if product.image %}
+          <a href="{% url 'product_detail' product.slug %}" class="block">
+            <img 
+              src="{{ product.image.url }}" 
+              alt="{{ product.name }}" 
+              class="w-full h-auto cursor-pointer block transition-transform duration-[250ms] ease-in-out group-hover:scale-110" 
+            />
+          </a>
+          {% if product.stock > 0 %}
+          <button data-product="{{ product.pk }}" class="add-to-cart-btn shop-now-btn absolute right-1/2 translate-x-1/2 bottom-0 opacity-0 group-hover:opacity-100 group-hover:bottom-[10px] transition-all duration-500 ease-in-out bg-transparent border border-[#4c5d7d] text-[#4c5d7d] px-5 py-4 hover:bg-[#4c5d7d] hover:text-white uppercase text-sm" onclick="openCart()">
+            Add to cart
+          </button>
+          {% else %}
+            <button class="cursor-not-allowed shop-now-btn absolute right-1/2 translate-x-1/2 bottom-0 opacity-0 group-hover:opacity-100 group-hover:bottom-[10px] transition-all duration-500 ease-in-out bg-transparent border border-[#4c5d7d] text-[#4c5d7d] px-5 py-4 hover:bg-[#4c5d7d] hover:text-white uppercase text-sm">
+            Sold Out
+          </button>
+          {% endif %}
+          {% else %}
+          <img
+            src="{% static 'images/placeholder.jpg' %}"
+            alt="Placeholder"
+            class="w-full h-auto"
+          />
+          {% endif %}
+        </div>
+
+        <div class="product-info relative z-10 py-[15px] px-0">
+          <a href="{% url 'product_detail' product.id %}">
+            <h3 class="product-name font-['Proza_Libre'] font-medium text-base mb-[10px] text-[#4c5d7d] hover:text-[#cd865c] transition-all duration-500 ease-in-out cursor-pointer">
+              {{ product.name }}
+            </h3>
+          </a>
+          <p class="product-price text-[#4c5d7d]">₹{{ product.price }}</p>
+        </div>
+        
+      </div>
+      {% empty %}
+      <p class="w-full text-center">The vault is currently empty. Check back soon!</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

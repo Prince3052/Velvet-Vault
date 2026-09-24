@@ -1,0 +1,34 @@
+{% extends "store/master.html" %}
+{% block content %}
+
+<div class="container mx-auto py-16">
+    <h1 class="text-4xl text-center mb-10 text-[#4c5d7d]">Our Blog</h1>
+
+    <div class="grid md:grid-cols-3 gap-8">
+        {% for blog in blogs %}
+        <div class="border p-4 shadow-sm hover:shadow-md transition">
+            
+            {% if blog.image %}
+                <img src="{{ blog.image.url }}" class="mb-4">
+            {% endif %}
+
+            <h2 class="text-xl font-semibold text-[#4c5d7d]">
+                {{ blog.title }}
+            </h2>
+
+            <p class="text-sm text-gray-500 my-2">
+                {{ blog.created_at|date:"F d, Y" }}
+            </p>
+
+            <a href="{% url 'blog_detail' blog.slug %}" 
+               class="text-[#cd865c] hover:underline">
+               Read More →
+            </a>
+        </div>
+        {% empty %}
+            <p>No blogs available</p>
+        {% endfor %}
+    </div>
+</div>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+{% endblock %}

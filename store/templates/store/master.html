@@ -1,0 +1,454 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>{% block title %}Velvet Vault{% endblock %} | {{ page_title }}</title>
+    <link rel="shortcut icon" href="{% static 'images/shotcutIcon.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    
+    
+    <link rel="stylesheet" href="{% static "css/swiper-bundle.min.css" %}" />
+    <link rel="stylesheet" href="{% static "css/flickity.min.css" %}" />
+
+    <link rel="stylesheet" href="{% static "css/slider.css" %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Proza+Libre:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+<script src="{% static 'js/flickity.pkgd.min.js' %}" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <script src="{% static 'js/script.js' %}" defer></script>
+    <script src="{% static 'js/slider.js' %}" defer></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<style>
+nav.navbar {
+  background: transparent;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  width: 100%;
+  z-index: 999;
+  border-top: 2px solid #000;
+    transition: 
+    background-color 0.4s ease,
+    padding 0.4s ease,
+    box-shadow 0.4s ease;
+}
+nav.navbar .nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+ul.nav-links {
+  display: flex;
+  align-items: center;
+  padding: 25px 35px;
+}
+ul.nav-links .navbar-link {
+  margin-left: 25px;
+}
+#page-link:hover .multilevel-navbar{
+  opacity: 1;
+}
+ul.multilevel-navbar{
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0px 0px 8px 0px #ccc;
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.5s ease;
+  min-width: 150px;
+}
+ul.multilevel-navbar li{
+  margin: 10px 0px;
+  padding-left: 10px;
+}
+.navbar.scrolled {
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.account-icon {
+  width: 46px;
+  height: 46px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+ul.right-menu {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.cart-btn {
+  padding: 10px 25px;
+}
+
+.container {
+  width: 100%;
+  padding: 0px 24px;
+}
+.hamburger {
+  display: none; /* Hidden on desktop */
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+  z-index: 100;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #000;
+  transition: 0.3s;
+}
+.hide{
+  display: none;
+}
+#cartDrawer{z-index: 9999}
+</style>
+<body>
+  <div id="searchPopup" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  
+  <div class="bg-white w-[90%] max-w-lg p-5 rounded-xl shadow-lg relative">
+    
+    <!-- Close Button -->
+    <button id="closeSearch" class="absolute -top-8 right-3 text-2xl">
+      <svg width="24px" height="24px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff" stroke-width="2.752"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><line x1="16" y1="16" x2="48" y2="48"></line><line x1="48" y1="16" x2="16" y2="48"></line></g></svg>
+    </button>
+
+    <!-- Input -->
+    <div id="searchBox" class="bg-white p-5 rounded-lg w-[400px]">
+    <input type="text" id="searchInput" placeholder="Search jewelry..." class="w-full text-[#4c5d7d] border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black">
+    </div>
+    <div id="searchResults" class="mt-4 space-y-3 max-h-80 overflow-y-auto"></div>
+  </div>
+</div>
+    <!-- Header -->
+    <nav class="navbar" id="navbar">
+      <div class="container">
+        <div class="nav-container">
+          <div class="logo">
+            <a href="{% url 'home_page' %}" class="text-[#4c5d7d]">
+              <img src="{% static 'images/myLogo.png' %}" alt="logo" class="w-[120px]">
+            </a>
+            </div>
+          <ul class="nav-links" id="navLinks">
+            <li><a href="{% url 'home_page' %}" class="text-[#4c5d7d] hover:text-[#cd865c] navbar-link transition duration-500 ease-in-out">Home</a></li>
+            <li class="relative group">
+              <a href="#" class="text-[#4c5d7d] flex items-center navbar-link transition duration-500 ease-in-out hover:text-[#cd865c]">Shop
+                     <svg width="24px" height="24px" viewBox="0 0 24 24" fill="#4c5d7d" xmlns="http://www.w3.org/2000/svg" transform="rotate(270)" class="ml-1 transition-transform duration-500 group-hover:rotate-90"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 7L10 12L15 17" stroke="#4c5d7d" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+              </a>
+            <ul class="absolute top-full left-0 mt-2 
+             w-40 bg-white text-[#4c5d7d] 
+             shadow-lg rounded-md 
+             opacity-0 invisible 
+             group-hover:opacity-100 group-hover:visible 
+             transition-all duration-300 ease-in-out 
+             z-50">
+
+    {% for collection in collections %}
+    <li>
+      <a href="{% url 'collection_page' collection.id %}" 
+         class="block px-4 py-2 hover:text-[#cd865c] transition">
+         {{ collection.name }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+            </li>
+          <ul class="flex space-x-6 text-white"> 
+            <li class="relative group">
+  <!-- Main Link -->
+  <a href="{% url 'about_page' %}" 
+     class="text-[#4c5d7d] group hover:text-[#cd865c] navbar-link flex items-center transition duration-300">
+     Page
+     <svg width="24px" height="24px" viewBox="0 0 24 24" fill="#4c5d7d" xmlns="http://www.w3.org/2000/svg" transform="rotate(270)" class="ml-1 transition-transform duration-500 group-hover:rotate-90"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 7L10 12L15 17" stroke="#4c5d7d" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+  </a> 
+  <!-- Dropdown -->
+  <ul class="absolute top-full left-0 mt-2 
+             w-40 bg-white text-[#4c5d7d] 
+             shadow-lg rounded-md 
+             opacity-0 invisible 
+             group-hover:opacity-100 group-hover:visible 
+             transition-all duration-300 ease-in-out 
+             z-50">
+    <li>
+      <a href="{% url 'about_page' %}" 
+         class="block px-4 py-2 hover:text-[#cd865c] transition">
+         About
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'blog_list' %}" 
+         class="block px-4 py-2 hover:text-[#cd865c] transition">
+         Blog
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'faq_page' %}" 
+         class="block px-4 py-2 hover:text-[#cd865c] transition">
+         FAQ
+      </a>
+    </li>
+  </ul>
+</li> 
+                </ul>
+            <li><a href="{% url 'contact_page' %}" class="text-[#4c5d7d] hover:text-[#cd865c] navbar-link transition duration-500 ease-in-out">Contact</a></li>
+          </ul>
+
+          <ul class="right-menu flex items-center gap-6">
+            <li class="cursor-pointer search-icon" id="searchIcon">
+              <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#4c5d7d">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.144"/>
+              <g id="SVGRepo_iconCarrier"> <path d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z" stroke="#4c5d7d" stroke-width="1.32" stroke-linecap="round" stroke-linejoin="round"/> </g>
+            </svg>
+          </li>
+  {% if user.is_authenticated %}
+  <li class="relative group">
+    
+    <!-- Username -->
+    <button class="flex items-center gap-2 font-medium text-[#cd865c]">
+      👤 {{ user.username|title }}
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </button>
+
+    <!-- Dropdown -->
+    <div class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg 
+       opacity-0 invisible translate-y-2
+       group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
+       transition-all duration-300">
+
+      <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-[#4c5d7d] hover:text-[#cd865c] transition duration-500 ease-in-out">
+        Profile
+      </a>
+
+      <a href="{% url 'logout' %}" 
+         class="block px-4 py-2 text-[#cd865c] hover:bg-gray-100 transition duration-500 ease-in-out">
+        Logout
+      </a>
+
+    </div>
+
+  </li>
+
+  {% else %}
+  
+  <li>
+    <a href="{% url 'login' %}" class="px-5 py-2 rounded-sm text-sm font-medium
+            border border-[#4c5d7d] text-[#4c5d7d]
+            hover:bg-[#4c5d7d] hover:text-white
+            transition duration-500 ease-in-out
+            focus:outline-none focus:ring-2 focus:ring-yellow-300">Login</a>
+  </li>
+
+  {% endif %}
+
+  <!-- Cart -->
+  <li>
+    <div class="relative cursor-pointer" onclick="openCart()">
+      <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g  id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.048"></g><g id="SVGRepo_iconCarrier"> <path d="M2 3H4.5L6.5 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM6.07142 14H18L21 5H4.78571M11 19C11 20.1046 10.1046 21 9 21C7.89543 21 7 20.1046 7 19C7 17.8954 7.89543 17 9 17C10.1046 17 11 17.8954 11 19Z" stroke="#4c5d7d" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+<span id="cart-count"
+      class="absolute -top-2 w-5 h-5 justify-center flex -right-2 bg-[#4c5d7d] text-white text-xs px-2 py-0.5 rounded-full"
+      style="{% if cart_count == 0 %}display:none;{% endif %}">
+    {{ cart_count }}
+</span>
+  </div>
+  </li>
+          </ul>
+          <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content">
+        {% block content %}{% endblock %}
+    </main>
+
+
+<!--Cart Drawer-->
+
+<!-- Overlay -->
+<div id="cartOverlay"
+     onclick="closeCart()"
+     class="fixed inset-0 bg-black/40 opacity-0 invisible transition-all duration-300 z-40"></div>
+
+<!-- Cart Drawer -->
+<div id="cartDrawer"
+     class="fixed top-0 right-0 h-full w-[380px] bg-white shadow-xl translate-x-full transition-transform duration-300 flex flex-col">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center p-4 border-b">
+        <h2 class="text-lg text-gray-500 font-semibold">Shopping cart</h2>
+        <button onclick="closeCart()" class="text-2xl text-gray-500">X</button>
+    </div>
+
+    <!-- Cart Items -->
+<div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-4">
+    {% for item in cart_items %}
+<div id="cart-item-{{ item.product.id }}" class="flex gap-4 items-center border-b pb-4">
+
+    <img src="{{ item.product.image }}" class="w-16 h-16 object-cover rounded">
+
+    <div class="flex-1">
+        <h4 class="text-sm text-[#4c5d7d] font-semibold">
+            {{ item.product.name }}
+        </h4>
+
+        <p class="text-sm text-gray-500">
+            Total: ₹{{ item.total_price }}
+        </p>
+
+        <!-- Quantity -->
+        <div class="cart-qty flex items-center gap-2 mt-2">
+            <button class="decrement border px-2 text-[#4c5d7d]" data-product="{{ item.id }}">-</button>
+            <span class="quantity text-[#4c5d7d]">{{ item.quantity }}</span>
+            <button class="increment border px-2 text-[#4c5d7d]" data-product="{{ item.id }}">+</button>
+        </div>
+    </div>
+
+    <!-- Remove -->
+    <button class="remove-item text-red-500" data-product="{{ item.product.id }}">
+        Remove
+    </button>
+</div>
+    {% empty %}
+    <p class="text-gray-500 text-center">
+        Your cart is empty
+    </p>
+    {% endfor %}
+</div>
+<div class="p-4 border-t">
+    <div class="flex justify-between text-lg font-semibold text-[#4c5d7d]">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">₹{{ cart_subtotal }}</span>
+    </div>
+</div>
+    <!-- Footer -->
+    <div class="border-t p-4">
+
+<a href="{% url 'checkout' %}" 
+   class="w-full block text-center bg-black text-white py-3 rounded hover:bg-gray-800 transition">
+   Checkout
+</a>
+
+    </div>
+
+</div>
+
+
+
+    <!-- Footer -->
+    {% include "store/footer.html" %}
+
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+        <script src="{% static 'js/cart.js' %}"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() { 
+        document.body.classList.add("fade-in");
+          AOS.init({
+          duration: 1000,
+          once: true
+        });
+      });
+      window.addEventListener("scroll", function () {
+  const navbar = document.getElementById("navbar");
+
+  if (window.scrollY > 50) {
+    navbar.classList.add("scrolled");
+  } else {
+    navbar.classList.remove("scrolled");
+  }
+
+});
+
+      const hamburger = document.getElementById("hamburger");
+      const navLinks = document.getElementById("navLinks");
+
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+
+        // Optional: Animate hamburger into an 'X'
+        hamburger.classList.toggle("toggle");
+      });
+
+      // No imports needed when using the CDN script above
+      var swiper = new Swiper(".hero-section-swiper", {
+        loop: true, // Recommended for jewelry showcases
+        effect: "fade",
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+
+      //Video JS
+      function openVideo() {
+        const modal = document.getElementById("videoModal");
+        const iframe = document.getElementById("youtubeFrame");
+        iframe.src =
+          "https://www.youtube-nocookie.com/embed/6_J9GMgcIEE?si=-tCVm0HSIiSHidip&autoplay=1";
+        modal.style.display = "flex";
+      }
+      function closeVideo() {
+        const modal = document.getElementById("videoModal");
+        const iframe = document.getElementById("youtubeFrame");
+        iframe.src = ""; // stop video
+        modal.style.display = "none";
+      }
+
+      
+
+      //Testemonial Slider
+      var swiper = new Swiper('.review-swiper', { 
+        slidesPerView: 3,
+        spaceBetween: 50,
+        loop: true, // wrap-around effect 
+        pagination: { el: '.swiper-pagination', 
+        clickable: true, 
+      },
+      speed: 1500
+    });
+
+
+    var flkty = new Flickity('.logo-carousel', { 
+      prevNextButtons: false, 
+      autoplay: true,  
+      wrapAround: true, 
+      pageDots: false 
+    }); // Pause autoplay on hover 
+    
+    {% comment %} var carouselElement = document.querySelector('.logo-carousel'); 
+    carouselElement.addEventListener('mouseenter', function() { 
+      flkty.pausePlayer(); 
+    }); 
+    carouselElement.addEventListener('mouseleave', function() { 
+      flkty.playPlayer(); 
+    }); {% endcomment %}
+    </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+{% extends "store/master.html" %}
+{% block content %}
+<!-- contact.html -->
+ <section class="bg-white py-12">
+<div class="container mx-auto">
+<div class="px-4 my-10  grid grid-cols-1 md:grid-cols-2 gap-8">
+  
+  <!-- Left: Contact Form -->
+  <div class="shadow-[0_0_31px_3.5px_rgba(0,0,0,0.05)] p-6">
+    <h2 class="text-4xl text-[#4c5d7d] mb-4">Contact Form</h2>
+    
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      
+      <!-- Name -->
+      <div>
+        <input type="text" name="name" placeholder="Name *"
+        class="w-full border border-gray-300 bg-white px-4 py-3 focus:outline-none focus:border-[#cd865c] transition duration-500 text-[#4C5D7D]" required>
+      </div>
+
+      <!-- Email -->
+      <div>
+      <input type="email" name="email" placeholder="Email *"
+        class="w-full border border-gray-300 bg-white px-4 py-3 focus:outline-none focus:border-[#cd865c] transition duration-500 text-[#4C5D7D]" required>
+      </div>
+
+      <!-- Comment -->
+      <div>
+        <textarea name="comment" rows="4" placeholder="Comment *" class="w-full border border-gray-300 bg-white px-4 py-3 focus:outline-none focus:border-[#cd865c] transition duration-500 text-[#4C5D7D]" required></textarea>
+      </div>
+
+      <!-- Checkbox -->
+      <div class="flex items-center">
+        <input id="save-info" type="checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 rounded">
+        <label for="save-info" class="ml-2 block text-sm text-gray-600">Save my name, email, and website in this browser.</label>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="border border-[#4C5D7D] text-[#4C5D7D] px-10 py-3 hover:bg-[#4C5D7D] hover:text-white transition duration-500">
+        SEND
+      </button>
+    </form>
+  </div>
+
+  <!-- Right: Contact Info -->
+  <div class="rounded-lg p-6">
+    <h2 class="text-lg mb-2 text-[#cd865c]">CONTACT US</h2>
+    <p class="text-5xl text-[#4C5D7D] mb-6">Get in Touch</p>
+    <p class="text-[#4C5D7D] mb-6">
+      Suspendisse potenti nullam ac tortor vitae purus faucibus ornare suspendisse. Integer enim neque volutpat ac tincidunt vitae. Tempus urna et pharetra pharetra massa massa ultricies mi. Maecenas sed enim ut sem viverra aliquet eget sit. Tristique senectus et net.
+    </p>
+
+    <ul class="space-y-3 text-[#4C5D7D]">
+      <li class="flex items-center gap-3 text-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-location fill-[#4C5D7D]" width="16.169" height="15" viewBox="0 0 16.169 15">
+          <g transform="translate(-857.945 -7878)">
+          <path d="M19.5.035a6.159,6.159,0,0,0-5.3,6.586c.363,4.176,4.2,7.29,5.519,8.241a.717.717,0,0,0,.864-.016c1.366-1.067,5.562-4.684,5.562-8.86A5.988,5.988,0,0,0,19.5.035m.656,8.327a2.376,2.376,0,1,1,2.376-2.375,2.376,2.376,0,0,1-2.376,2.375" transform="translate(843.773 7878)"></path>
+          </g>
+        </svg>
+        198 Tripti Nagar Pandesara, Surat, Gujarat 394221.</li>
+      <li class="text-sm">
+        <a href="mailto:princesharma3052@gmail.com" class="flex items-center gap-3 transition duration-300 hover:text-[#cd865c] hover:fill-[#cd865c] fill-[#4C5D7D]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-email" width="16.169" height="15" viewBox="0 0 16.169 15">
+  <g transform="translate(-830.001 -7883)">
+    <path d="M15.394,4.233,9.038.272a1.8,1.8,0,0,0-1.905,0L.777,4.233A1.63,1.63,0,0,0,0,5.615v7.744A1.663,1.663,0,0,0,1.685,15h12.8a1.663,1.663,0,0,0,1.684-1.641V5.615a1.63,1.63,0,0,0-.776-1.382M6.015,10.775,2.078,13.837a.547.547,0,1,1-.672-.863L5.344,9.912a.547.547,0,1,1,.672.863M7.565,9.49,2.578,5.958a.684.684,0,0,1,.414-1.241H13.179a.684.684,0,0,1,.414,1.241L8.606,9.49a.9.9,0,0,1-1.041,0m7.3,4.252a.547.547,0,0,1-.768.1l-3.937-3.062a.547.547,0,1,1,.672-.863l3.937,3.062a.547.547,0,0,1,.1.767" transform="translate(830 7883)"></path>
+    <path d="M79.193,73.164h-3.5a.656.656,0,1,0,0,1.312h3.5a.656.656,0,0,0,0-1.312" transform="translate(760.861 7815.585)"></path>
+  </g>
+</svg>
+        princesharma3052@gmail.com
+      </a>
+      </li>
+                  
+        
+      <li class="text-sm">
+        <a href="tel:6353783052" class="flex items-center gap-3 transition duration-300 hover:text-[#cd865c] hover:fill-[#cd865c] fill-[#4C5D7D]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-phone" width="16.676" height="15" viewBox="0 0 16.676 15">
+  <g transform="translate(-786 -7681)">
+    <path d="M92.439,54.087,91.677,51.8a.506.506,0,0,1,.034-.393,5.96,5.96,0,0,0-3.388-8.372,7.11,7.11,0,0,1,.419,4.038,6.987,6.987,0,0,1-5.61,5.555,7.3,7.3,0,0,1-1.1.107A5.954,5.954,0,0,0,89.1,54a.505.505,0,0,1,.39-.032l2.294.765a.514.514,0,0,0,.65-.65" transform="translate(710.21 7641.236)"></path>
+    <path d="M4.915.107A5.958,5.958,0,0,0,.756,8.682a.506.506,0,0,1,.034.393L.028,11.36a.514.514,0,0,0,.65.65l2.294-.765a.506.506,0,0,1,.39.032A5.964,5.964,0,1,0,4.915.107m1.517,7.71H3.469a.529.529,0,1,1,0-1.058H6.432a.529.529,0,1,1,0,1.058M8.548,5.7H3.469a.529.529,0,1,1,0-1.058h5.08a.529.529,0,1,1,0,1.058" transform="translate(786 7681)"></path>
+  </g>
+</svg>
+        6353783052
+      </a>
+      </li>
+    </ul>
+
+    <!-- Social Icons -->
+    <div class="mt-6">
+      <h3 class="text-2xl text-[#4C5D7D] mb-2">Connect on Social</h3>
+        <ul class="flex items-center gap-3">
+          <li>
+            <a href="https://x.com/" target="_main" class="fill-[#4C5D7D] hover:fill-[#cd865c]">
+              <svg class="icon icon-twitter" width="20" height="18" viewBox="0 0 20 18" fill="#4C5D7D" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#4C5D7D" d="M0.0468725 0L7.47201 9.92802L0 18H1.68166L8.22336 10.9329L13.5089 18H19.2316L11.3887 7.51356L18.3436 0H16.6619L10.6373 6.50867L5.76958 0H0.0468725ZM2.51982 1.23871H5.14884L16.7582 16.7611H14.1292L2.51982 1.23871Z"></path>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/prince.sharma.182706" target="_main" class="fill-[#4C5D7D] hover:fill-[#cd865c]">
+              <svg aria-hidden="true" focusable="false" width="20" height="18" fill="#4C5D7D" role="presentation" class="icon icon-facebook" viewBox="0 0 18 18">
+                <path fill="#4C5D7D" d="M16.42.61c.27 0 .5.1.69.28.19.2.28.42.28.7v15.44c0 .27-.1.5-.28.69a.94.94 0 01-.7.28h-4.39v-6.7h2.25l.31-2.65h-2.56v-1.7c0-.4.1-.72.28-.93.18-.2.5-.32 1-.32h1.37V3.35c-.6-.06-1.27-.1-2.01-.1-1.01 0-1.83.3-2.45.9-.62.6-.93 1.44-.93 2.53v1.97H7.04v2.65h2.24V18H.98c-.28 0-.5-.1-.7-.28a.94.94 0 01-.28-.7V1.59c0-.27.1-.5.28-.69a.94.94 0 01.7-.28h15.44z">
+                </path>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/iamprincesharma__04/" target="_main" class="fill-[#4C5D7D]">
+              <svg aria-hidden="true" focusable="false" width="20" height="18" fill="#4C5D7D" role="presentation" class="icon icon-instagram" viewBox="0 0 18 18">
+                <path fill="#4C5D7D" d="M8.77 1.58c2.34 0 2.62.01 3.54.05.86.04 1.32.18 1.63.3.41.17.7.35 1.01.66.3.3.5.6.65 1 .12.32.27.78.3 1.64.05.92.06 1.2.06 3.54s-.01 2.62-.05 3.54a4.79 4.79 0 01-.3 1.63c-.17.41-.35.7-.66 1.01-.3.3-.6.5-1.01.66-.31.12-.77.26-1.63.3-.92.04-1.2.05-3.54.05s-2.62 0-3.55-.05a4.79 4.79 0 01-1.62-.3c-.42-.16-.7-.35-1.01-.66-.31-.3-.5-.6-.66-1a4.87 4.87 0 01-.3-1.64c-.04-.92-.05-1.2-.05-3.54s0-2.62.05-3.54c.04-.86.18-1.32.3-1.63.16-.41.35-.7.66-1.01.3-.3.6-.5 1-.65.32-.12.78-.27 1.63-.3.93-.05 1.2-.06 3.55-.06zm0-1.58C6.39 0 6.09.01 5.15.05c-.93.04-1.57.2-2.13.4-.57.23-1.06.54-1.55 1.02C1 1.96.7 2.45.46 3.02c-.22.56-.37 1.2-.4 2.13C0 6.1 0 6.4 0 8.77s.01 2.68.05 3.61c.04.94.2 1.57.4 2.13.23.58.54 1.07 1.02 1.56.49.48.98.78 1.55 1.01.56.22 1.2.37 2.13.4.94.05 1.24.06 3.62.06 2.39 0 2.68-.01 3.62-.05.93-.04 1.57-.2 2.13-.41a4.27 4.27 0 001.55-1.01c.49-.49.79-.98 1.01-1.56.22-.55.37-1.19.41-2.13.04-.93.05-1.23.05-3.61 0-2.39 0-2.68-.05-3.62a6.47 6.47 0 00-.4-2.13 4.27 4.27 0 00-1.02-1.55A4.35 4.35 0 0014.52.46a6.43 6.43 0 00-2.13-.41A69 69 0 008.77 0z"></path>
+                <path fill="#4C5D7D" d="M8.8 4a4.5 4.5 0 100 9 4.5 4.5 0 000-9zm0 7.43a2.92 2.92 0 110-5.85 2.92 2.92 0 010 5.85zM13.43 5a1.05 1.05 0 100-2.1 1.05 1.05 0 000 2.1z">
+                </path>
+              </svg>
+            </a>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>
+ </div>
+ </section>
+
+<section class="py-10">
+  <div class="container">
+    <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=Marriott Hotel +Surat+Gujarat+India" width="100%" height="500px" frameborder="0" style="border:0; width: 100%; height:500px" allowfullscreen></iframe>
+  </div>
+</section>
+{% endblock %}

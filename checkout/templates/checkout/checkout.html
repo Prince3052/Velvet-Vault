@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Velvet Vault | Checkout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+</head>
+<body class="bg-gray-100">
+    <nav class="navbar" id="navbar">
+      <div class="container mx-auto">
+        <div class="nav-container py-4">
+          <div class="logo">
+            <a href="{% url 'home_page' %}" class="text-[#4c5d7d]">
+              <img src="{% static 'images/Gold  elegant  Fashion Circle Logo.png' %}" alt="logo" class="w-[200px]">
+            </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mx-auto">
+<div class="min-h-screen flex flex-col lg:flex-row">
+
+    <!-- LEFT SIDE (FORM) -->
+    <div class="w-full lg:w-1/2 bg-white p-8">
+        
+
+<form method="POST" action="{% url 'payment_method' %}" class="space-y-4">
+    {% csrf_token %}
+
+    <label class="text-xl font-semibold">Contact</label>
+    <input name="email" placeholder="Email or mobile" required class="w-full border p-3 rounded">
+
+    <h2 class="text-xl font-semibold">Delivery</h2>
+
+    <input type="text" name="name" placeholder="Full Name" required class="w-full border p-3 rounded">
+    <input type="text" name="phone" placeholder="Phone Number" required class="w-full border p-3 rounded">
+    <input type="text" name="address" placeholder="Address" required class="w-full border p-3 rounded">
+    <input type="text" name="city" placeholder="City" class="w-full border p-3 rounded">
+    <input type="text" name="postalCode" placeholder="PIN code" required class="w-full border p-3 rounded">
+
+    <!-- ✅ SUBMIT BUTTON -->
+    <button type="submit"
+        class="mt-4 w-full text-center border bg-[#4c5d7d] px-10 py-4 text-white uppercase hover:bg-[#cd865c]">
+        Proceed to Buy
+    </button>
+</form>
+    </div>
+
+    <!-- RIGHT SIDE (CART SUMMARY) -->
+    <div class="w-full lg:w-1/2 bg-gray-50 p-8">
+        <h2 class="text-2xl font-semibold mb-6">Order Summary</h2>
+
+        <!-- Cart Items -->
+        <div class="space-y-4">
+            {% for item in cart_items %}
+            <div class="flex items-center gap-4 bg-white p-4 rounded shadow-sm">
+                <img src="{{ item.image }}" class="w-16 h-16 object-cover rounded">
+
+                <div class="flex-1">
+                    <h4 class="text-sm font-semibold">{{ item.name }}</h4>
+                    <p class="text-gray-500 text-sm">
+                        ₹{{ item.price }} × {{ item.quantity }}
+                    </p>
+                </div>
+
+                <p class="font-semibold">₹{{ item.total }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Total -->
+        <div class="mt-6 border-t pt-4 flex justify-between text-lg font-semibold">
+            <span>Total</span>
+            <span>₹{{ cart_total }}</span>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    //Razorpay
+const payBtn = document.getElementById("payBtn");
+
+console.log("Order ID:", "{{ order.id }}"); // DEBUG
+
+payBtn.onclick = function(e){
+
+    console.log("Clicked Buy Now");
+
+    var options = {
+        key: "{{ razorpay_key }}",
+        amount: "{{ order.amount }}",
+        currency: "INR",
+        name: "Velvet Vault",
+        description: "{{ product.name }}",
+        order_id: "{{ order.id }}",
+
+        handler: function (response){
+            console.log("SUCCESS:", response);
+
+            fetch("/payment/verify/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: new URLSearchParams(response)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success"){
+                    window.location.href = "/success/";
+                } else {
+                    alert("Payment Failed");
+                }
+            });
+        }
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.open();
+
+    e.preventDefault();
+}
+</script>
+</body>
+</html>

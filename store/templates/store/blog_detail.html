@@ -1,0 +1,24 @@
+{% extends "store/master.html" %}
+{% block content %}
+
+<div class="container mx-auto py-16 max-w-3xl">
+
+    <h1 class="text-4xl mb-4 text-[#4c5d7d]">
+        {{ blog.title }}
+    </h1>
+
+    <p class="text-gray-500 mb-6">
+        By {{ blog.author }} | {{ blog.created_at|date:"F d, Y" }}
+    </p>
+
+    {% if blog.image %}
+        <img src="{{ blog.image.url }}" class="mb-6">
+    {% endif %}
+
+    <div class="text-lg leading-relaxed text-gray-700">
+        {{ blog.content }}
+    </div>
+
+</div>
+
+{% endblock %}

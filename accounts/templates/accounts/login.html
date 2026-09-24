@@ -1,0 +1,70 @@
+{% extends "store/master.html" %}
+{% load static %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div style="color: green; font-weight: bold;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+<div class="min-h-screen flex items-center justify-center bg-[#ECECEC] px-4">
+  
+  <div class="w-full max-w-2xl bg-gray-50 p-12 rounded-sm shadow-sm">
+{% if messages %}
+  {% for message in messages %}
+<div id="alert-1" class="flex sm:items-center p-4 mb-4 text-sm rounded-lg bg-red-100" role="alert">
+  <div class="ms-2 text-sm text-red-400">
+    User does not exist or wrong password.
+  </div>
+    <button type="button" class="ms-auto close-alert -mx-1.5 -my-1.5 rounded focus:ring-2 focus:ring-brand-medium hover:bg-brand-soft inline-flex items-center justify-center h-8 w-8 shrink-0 shrink-0" data-dismiss-target="#alert-1" aria-label="Close">
+      <span class="sr-only">Close</span>
+      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#f87171" viewBox="0 0 24 24"><path stroke="#f87171" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/></svg>
+  </button>
+</div>
+  {% endfor %}
+{% endif %}
+    <!-- Title -->
+    <h1 class="text-5xl font-light text-[#4C5D7D] text-center mb-4">
+      Sign In
+    </h1>
+
+    <p class="text-center text-[#4C5D7D] mb-10">
+      Don’t have an account?
+      <a href="{% url 'register' %}" class="text-[#4C5D7D] hover:text-[#cd865c] transition duration-500">
+        Sign Up
+      </a>
+    </p>
+
+    <!-- Form -->
+    <form method="POST" class="space-y-6">
+      {% csrf_token %}
+
+      <input type="email" name="email" placeholder="Email"
+        class="w-full border border-[#4C5D7D] bg-white px-4 py-3 focus:outline-none text-[#4C5D7D] focus:border-[#cd865c] transition duration-500">
+
+      <input type="password" name="password" placeholder="Password"
+        class="w-full border border-[#4C5D7D] bg-white px-4 py-3 focus:outline-none text-[#4C5D7D] focus:border-[#cd865c] transition duration-500">
+
+      <!-- Button -->
+      <div class="text-center pt-6">
+        <button type="submit"
+          class="border border-[#4C5D7D] text-[#4C5D7D] px-10 py-3 hover:bg-[#4C5D7D] hover:text-white transition duration-500">
+          LOGIN
+        </button>
+        <a href="{% url 'forgot_password' %}" class="text-[#4C5D7D]">Forgot Password?</a>
+      </div>
+    </form>
+
+  </div>
+</div>
+<script>
+const close = document.querySelector('.close-alert');
+const alert = document.querySelector('#alert-1');
+
+close.addEventListener('click', () => {
+  alert.style.display = 'none';
+})
+</script>
+{% endblock %}

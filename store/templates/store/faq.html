@@ -1,0 +1,147 @@
+{% extends "store/master.html" %}
+{% block content %}
+
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<section class="py-10">
+<div class="container">
+<div class="py-6 md:py-12 font-sans text-slate-800" x-data="{ tab: 'product', selected: null }">
+  
+  <div class="text-center mb-5 md:mb-10">
+    <h2 class="text-2xl md:text-4xl text-[#4c5d7d] font-semibold mb-2">Answers For All Your Questions</h2>
+    <p class="text-[#4c5d7d]">Everything you need to know about our jewelry and policies.</p>
+  </div>
+
+  <div class="flex flex-wrap justify-center gap-3 mb-8">
+    <button @click="tab = 'product'; selected = null" :class="tab === 'product' ? 'bg-[#4c5d7d] text-white' : 'bg-white text-[#4c5d7d]'" class="sm:w-auto px-6 py-2 border border-slate-100 shadow-sm transition-all duration-300">Product Info</button>
+    <button @click="tab = 'returns'; selected = null" :class="tab === 'returns' ? 'bg-[#4c5d7d] text-white' : 'bg-white text-[#4c5d7d]'" class="sm:w-auto px-6 py-2 border border-slate-100 shadow-sm transition-all duration-300">Returns and Exchanges</button>
+    <button @click="tab = 'shipping'; selected = null" :class="tab === 'shipping' ? 'bg-[#4c5d7d] text-white' : 'bg-white text-[#4c5d7d]'" class="sm:w-auto px-6 py-2 border border-slate-100 shadow-sm transition-all duration-300">Shipping and Delivery</button>
+    <button @click="tab = 'policy'; selected = null" :class="tab === 'policy' ? 'bg-[#4c5d7d] text-white' : 'bg-white text-[#4c5d7d]'" class="sm:w-auto px-6 py-2 border border-slate-100 shadow-sm transition-all duration-300">Privacy Policy</button>
+  </div>
+
+  <div class="space-y-4">
+    <template x-if="tab === 'product'">
+      <div class="space-y-4">
+        <div class="">
+        <div class="border border-slate-200 bg-white mb-5">
+          <button @click="selected !== 1 ? selected = 1 : selected = null" class="w-full flex justify-between items-center p-4 md:p-6 text-left focus:outline-none">
+            <span class="text-sm md:text-lg font-medium text-[#4c5d7d]">How should I clean my jewelry at home?</span>
+            <span class="transition-transform duration-300 text-2xl" :class="selected === 1 ? 'rotate-45' : ''">+</span>
+          </button>
+          <div class="relative overflow-hidden transition-all duration-500 max-h-0" x-ref="p1" :style="selected === 1 ? 'max-height: ' + $refs.p1.scrollHeight + 'px' : ''">
+            <div class="px-4 pb-4 md:pb-6 md:px-6  text-[#4c5d7d]">Cleaning your jewelry at home can be simple and safe if you use the right methods for each type of piece. For most items, a gentle solution of warm water and mild dish soap works well. Soak the jewelry for a few minutes, then use a soft toothbrush to remove dirt from crevices, and rinse thoroughly before drying with a lint‑free cloth. This method is especially effective for gold and platinum.</div>
+          </div>
+        </div>
+
+        <div class="">
+            <div class="border border-slate-200 bg-white mb-5">
+          <button @click="selected !== 2 ? selected = 2 : selected = null" class="w-full flex justify-between items-center p-4 md:p-6 text-left focus:outline-none">
+            <span class="text-sm md:text-lg font-medium text-[#4c5d7d]">How to find my jewelry is real or fake?</span>
+            <span class="transition-transform duration-300 text-2xl" :class="selected === 2 ? 'rotate-45' : ''">+</span>
+          </button>
+          <div class="relative overflow-hidden transition-all duration-500 max-h-0" x-ref="p1" :style="selected === 2 ? 'max-height: ' + $refs.p1.scrollHeight + 'px' : ''">
+            <div class="px-4 pb-4 md:pb-6 md:px-6 text-[#4c5d7d]">For metals like gold, silver, or platinum, start by looking for hallmarks or stamps that indicate purity (for example, “925” for sterling silver or “18K” for gold). These marks are usually small and discreet but should be clear and consistent. You can also check whether the piece tarnishes or changes color — genuine gold doesn’t tarnish, while plated jewelry often does. Magnets are another quick test: real gold and silver aren’t magnetic, so if your jewelry sticks to a magnet, it’s likely fake or mixed with other metals.</div>
+          </div>
+        </div>
+
+        <div class="">
+            <div class="border border-slate-200 bg-white mb-5">
+          <button @click="selected !== 3 ? selected = 3 : selected = null" class="w-full flex justify-between items-center p-4 md:p-6 text-left focus:outline-none">
+            <span class="text-sm md:text-lg font-medium text-[#4c5d7d]">How do I choose the right style earrings for my face shape?</span>
+            <span class="transition-transform duration-300 text-2xl" :class="selected === 3 ? 'rotate-45' : ''">+</span>
+          </button>
+          <div class="relative overflow-hidden transition-all duration-500 max-h-0" x-ref="p1" :style="selected === 3 ? 'max-height: ' + $refs.p1.scrollHeight + 'px' : ''">
+            <div class="px-4 pb-4 md:pb-6 md:px-6 text-[#4c5d7d]">If you have a round face, longer and angular earrings work best because they add length and slim the appearance of your cheeks. For a square face, rounded or hoop styles soften strong jawlines. A heart-shaped face benefits from teardrop or chandelier earrings that balance a wider forehead with a narrower chin. Oval faces are the most versatile — nearly any style works, from studs to dramatic drops. For long or rectangular faces, wider earrings like studs, clusters, or short dangles help add fullness and balance out the length.</div>
+          </div>
+        </div>
+    </div>
+
+        <div class="">
+            <div class="border border-slate-200 bg-white mb-5">
+          <button @click="selected !== 4 ? selected = 4 : selected = null" class="w-full flex justify-between items-center p-4 md:p-6 text-left focus:outline-none">
+            <span class="text-sm md:text-lg font-medium text-[#4c5d7d]">How to get my diamond purity certificate?</span>
+            <span class="transition-transform duration-300 text-2xl" :class="selected === 4 ? 'rotate-45' : ''">+</span>
+          </button>
+          <div class="relative overflow-hidden transition-all duration-500 max-h-0" x-ref="p1" :style="selected === 4 ? 'max-height: ' + $refs.p1.scrollHeight + 'px' : ''">
+            <div class="px-4 pb-4 md:pb-6 md:px-6 text-[#4c5d7d]">Getting a diamond purity certificate is essentially about having your stone evaluated and authenticated by a recognized gemological laboratory. You would take your diamond to a trusted lab or an authorized jeweler who partners with one. The lab then examines the diamond using specialized equipment and expert graders, assessing its cut, color, clarity, and carat weight. Once the evaluation is complete, the lab issues a certificate that details these qualities, often including additional notes on polish, symmetry, and a diagram that marks any inclusions.</div>
+          </div>
+      </div>
+    </div>
+    </template>
+
+    <template x-if="tab === 'returns'">
+      <div class="space-y-4">
+        <div class="border border-slate-200 bg-white">
+          <button @click="selected !== 201 ? selected = 201 : selected = null" class="w-full flex justify-between items-center p-4 md:p-6 text-left focus:outline-none">
+            <span class="text-sm md:text-lg font-medium text-[#4c5d7d]">What is your return policy?</span>
+            <span class="transition-transform duration-300 text-2xl" :class="selected === 201 ? 'rotate-45' : ''">+</span>
+          </button>
+          <div class="relative overflow-hidden transition-all duration-500 max-h-0" x-ref="r1" :style="selected === 201 ? 'max-height: ' + $refs.r1.scrollHeight + 'px' : ''">
+            <div class="px-4 pb-4 md:pb-6 md:px-6 text-[#4c5d7d]">Velvet Vault’s return policy would ideally be designed to balance customer trust with brand protection. Typically, a premium jewelry brand offers a clear and reassuring framework: items can be returned within a set period — often 14 to 30 days — provided they are unworn, undamaged, and accompanied by their original packaging and certificates. Custom or personalized pieces may be excluded, since they’re tailored specifically for the buyer.</div>
+          </div>
+        </div>
+
+        <div class="border border-slate-200 bg-white">
+          <button @click="selected !== 102 ? selected = 102 : selected = null" class="w-full flex justify-between items-center p-4 md:p-6 text-left focus:outline-none">
+            <span class="text-sm md:text-lg font-medium text-[#4c5d7d]">How do I initiate a return or exchange?</span>
+            <span class="transition-transform duration-300 text-2xl" :class="selected === 102 ? 'rotate-45' : ''">+</span>
+          </button>
+          <div class="relative overflow-hidden transition-all duration-500 max-h-0" x-ref="r2" :style="selected === 102 ? 'max-height: ' + $refs.r2.scrollHeight + 'px' : ''">
+            <div class="px-4 pb-4 md:pb-6 md:px-6 text-[#4c5d7d]">To initiate a return or exchange with Velvet Vault, the process should be straightforward and reassuring for customers. You would begin by contacting customer support — either through the official website, email, or phone — to request a return authorization. Once approved, you’ll receive instructions on how to securely package the item, including keeping it in its original box and enclosing any certificates or documentation that came with it.</div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template x-if="tab === 'shipping'">
+      <div class="space-y-4">
+        <div class="border border-slate-200 bg-white">
+          <button @click="selected !== 101 ? selected = 101 : selected = null" class="w-full flex justify-between items-center p-4 md:p-6 text-left focus:outline-none">
+            <span class="text-sm md:text-lg font-medium text-[#4c5d7d]">How can I track my order?</span>
+            <span class="transition-transform duration-300 text-2xl" :class="selected === 101 ? 'rotate-45' : ''">+</span>
+          </button>
+          <div class="relative overflow-hidden transition-all duration-500 max-h-0" x-ref="r1" :style="selected === 101 ? 'max-height: ' + $refs.r1.scrollHeight + 'px' : ''">
+            <div class="px-4 pb-4 md:pb-6 md:px-6 text-[#4c5d7d]">Tracking your Velvet Vault order should be simple and transparent. Once your purchase is confirmed, you’ll receive an order confirmation email that includes a tracking link or reference number. By clicking the link or entering the number on the courier’s website, you can see the real‑time status of your shipment — from dispatch to transit updates and final delivery.</div>
+          </div>
+        </div>
+
+        <div class="border border-slate-200 bg-white">
+          <button @click="selected !== 102 ? selected = 102 : selected = null" class="w-full flex justify-between items-center p-4 md:p-6 text-left focus:outline-none">
+            <span class="text-sm md:text-lg font-medium text-[#4c5d7d]">What are your shipping options and delivery time?</span>
+            <span class="transition-transform duration-300 text-2xl" :class="selected === 102 ? 'rotate-45' : ''">+</span>
+          </button>
+          <div class="relative overflow-hidden transition-all duration-500 max-h-0" x-ref="r2" :style="selected === 102 ? 'max-height: ' + $refs.r2.scrollHeight + 'px' : ''">
+            <div class="px-4 pb-4 md:pb-6 md:px-6 text-[#4c5d7d]">Velvet Vault’s shipping options are designed to be flexible and secure. Orders are generally processed within 1–2 business days (excluding Sundays and public holidays), and once dispatched, customers receive a tracking number by email or SMS. Delivery times vary depending on the shipping method chosen and the destination: standard shipping typically takes 5–7 business days, while expedited options can arrive in 2–3 business days.</div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template x-if="tab === 'policy'">
+      <div class="space-y-4">
+        <div class="border border-slate-200 bg-white">
+          <button @click="selected !== 101 ? selected = 101 : selected = null" class="w-full flex justify-between items-center p-4 md:p-6 text-left focus:outline-none">
+            <span class="text-sm md:text-lg font-medium text-[#4c5d7d]">Can you provide more details about the materials used in your products?</span>
+            <span class="transition-transform duration-300 text-2xl" :class="selected === 101 ? 'rotate-45' : ''">+</span>
+          </button>
+          <div class="relative overflow-hidden transition-all duration-500 max-h-0" x-ref="r1" :style="selected === 101 ? 'max-height: ' + $refs.r1.scrollHeight + 'px' : ''">
+            <div class="px-4 pb-4 md:pb-6 md:px-6 text-[#4c5d7d]">Velvet Vault’s products are envisioned with a focus on premium materials that balance luxury with durability. The jewelry itself would typically be crafted from precious metals such as gold, silver, and platinum, often paired with certified gemstones like diamonds, sapphires, emeralds, or pearls. These materials are chosen not only for their beauty but also for their longevity, ensuring that each piece retains its brilliance over time.</div>
+          </div>
+        </div>
+
+        <div class="border border-slate-200 bg-white">
+          <button @click="selected !== 102 ? selected = 102 : selected = null" class="w-full flex justify-between items-center p-4 md:p-6 text-left focus:outline-none">
+            <span class="text-sm md:text-lg font-medium text-[#4c5d7d]">How should I care for and maintain my purchased items to ensure longevity?</span>
+            <span class="transition-transform duration-300 text-2xl" :class="selected === 102 ? 'rotate-45' : ''">+</span>
+          </button>
+          <div class="relative overflow-hidden transition-all duration-500 max-h-0" x-ref="r2" :style="selected === 102 ? 'max-height: ' + $refs.r2.scrollHeight + 'px' : ''">
+            <div class="px-4 pb-4 md:pb-6 md:px-6 text-[#4c5d7d]">Caring for and maintaining your jewelry at home is all about preserving its shine while protecting it from damage. The simplest routine is to clean pieces regularly with mild soap and warm water, using a soft brush to remove dirt from settings and crevices, then drying them with a lint‑free cloth. For silver, a polishing cloth or a gentle baking soda paste helps remove tarnish, while gold and platinum respond well to the soap‑and‑water method.</div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+</div>
+</div>
+</section>
+{% endblock %}

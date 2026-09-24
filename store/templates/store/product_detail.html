@@ -1,0 +1,403 @@
+{% extends "store/master.html" %}
+{% load static %}
+
+
+{% block content %}
+<style>
+
+.thumbnails { 
+  display: flex; 
+  gap: 0.5rem; 
+  margin-top: 1rem; 
+} 
+.thumbnails img { 
+  width: 70px; 
+  height: 70px; 
+  object-fit: cover; 
+  border: 1px solid #ddd; 
+  border-radius: 4px; 
+  cursor: pointer; 
+} 
+
+.product-details h2.product-name {
+  color: rgb(76, 93, 125);
+  line-height: 62px;
+  font-weight: 400;
+  font-size: 46px;
+  margin-bottom: 15px; 
+}
+.quantity,
+.price-animate {
+  display: inline-block;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.animate-pop {
+  transform: scale(1.25);
+  opacity: 0.7;
+}
+.product-details .product-description{
+  font-family: "DM Sans", sans-serif;
+  line-height: 26px;
+  margin: 20px 0px;
+  color: rgb(76, 93, 125);
+}
+.highlight { 
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #cd865c;
+  font-weight: bold; 
+} 
+.product-details .product-price { 
+  font-family: "DM Sans", sans-serif;
+  font-size: 30px;
+  letter-spacing: 1.3px;
+  line-height: 36px;
+  color: #4c5d7d;
+  margin: 1rem 0; 
+} 
+.stock {
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #cd865c;
+  font-weight: bold; 
+} 
+.vsc-controller{display: none}
+#lens {
+    width: 150px;
+    height: 150px;
+    background-repeat: no-repeat;
+    background-size: 200%;
+}
+.image-gallery  .carousel-cell {
+  width: 25%;
+}
+.image-gallery .flickity-button-icon {
+  display: none;
+}
+
+.image-gallery .flickity-prev-next-button::after {
+  content: "←";
+  font-size: 20px;
+  color: #4c5d7d;
+}
+
+.image-gallery .flickity-prev-next-button.next::after {
+  content: "→";
+}
+</style>
+<div class="container mx-auto">
+<div class="product-container grid grid-cols-1 md:grid-cols-5 gap-x-0 gap-y-10 md:gap-x-10 md:gap-y-0 mt-10 py-10">
+  <!-- Left: Product Images -->
+  <div class="image-gallery col-span-2">
+    <div id="mainContainer" class="relative main-image overflow-hidden w-full relative transition-opacity duration-300 opacity-100">
+      <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-auto object-cover transition block duration-300 shadow-lg" id="mainImage">
+      <div id="lens"
+         class="absolute hidden border border-[#4c5d7d] pointer-events-none"></div>
+    </div>
+    <div class="thumbnails ">
+      {% for thumb in product.thumbnails %}
+      <img src="{{ thumb.url }}" alt="Thumbnail of {{ product.name }}">
+      {% endfor %}
+    </div>
+  <div class="grid gap-1">
+    <div class="carousel"
+  data-flickity='{ "wrapAround": false, "selectedAttraction": 0.01, "friction":0.20, "groupCells": true, "pageDots": false }'>
+    {% for img in product.images.all %}
+    <div class="carousel-cell w-full mr-3">
+      <img src="{{ img.image.url }}"
+      onclick="changeMainMedia(this)"
+           class="thumb cursor-pointer border border-transparent hover:border-[#4c5d7d] transition duration-300">
+    
+    </div>
+
+    {% empty %}
+      <p>No additional images</p>
+    {% endfor %}
+
+  {% for video in product.videos.all %}
+  <div class="carousel-cell">
+    <video onclick="changeMainMedia(this)"
+           class="thumb w-full cursor-pointer border border-transparent hover:border-[#4c5d7d] transition duration-300"
+           muted playsinline preload="metadata">
+      <source src="{{ video.video.url }}" type="video/mp4">
+    </video>
+  </div>
+  {% endfor %}
+  </div>
+  </div>
+  </div>
+
+  <!-- Right: Product Details -->
+  <div class="product-details col-span-3">
+    <h2 class="product-name">{{ product.name }}</h2>
+    <p class="highlight">🔥 {{ product.sold_count }} sold in last 10 hours</p>
+    <p class="product-description">{{ product.description }}</p>
+    <p class="product-price">₹ {{ product.price }}</p>
+
+    <span class="text-[#4c5d7d]">Sub Total:</span>
+    <div class="flex items-center gap-2">
+    <p class="mb-4 text-xl text-[#4c5d7d]">
+      ₹ <span id="total-price" class="price-animate">{{ product.price }}</span>
+    </p>
+      <input type="hidden" id="base-price" value="{{ product.price }}">
+    </div>
+
+    <p class="stock">Hurry! Only {{ product.stock }} left in stock</p>
+
+    {% if product.category != blank %}
+    <div class="my-5">
+      <p class="mb-1 text-[#4c5d7d]">Metal Type: </p>
+      <span class="text-white bg-[#4c5d7d] py-2 px-5 text-xs">{{ product.category }}</span>
+    </div>
+    {% endif %}
+
+    {% if product.brand != blank %}
+    <div class="my-5">
+      <p class="mb-1 text-[#4c5d7d]">Brand: </p>
+      <span class="text-white bg-[#4c5d7d] py-2 px-5 text-xs">{{ product.brand }}</span>
+    </div>
+    {% endif %}
+
+    <!-- Buttons -->
+     <div class="adt flex items-center gap-4">
+      <div class="flex items-center justify-center gap-8 px-5 py-4 border border-[#4c5d7d]"> <button class="decrease px-2  text-[#4c5d7d]">-</button> <span class="quantity text-[#4c5d7d]">1</span> <button class="increase px-2 text-[#4c5d7d]">+</button> </div>
+      {% if product.stock > 0 %}
+      <button data-product="{{ product.pk }}" class="add-to-cart-btn inline-block border border-[#4c5d7d] px-10 py-4 text-[#4c5d7d] tracking-wider uppercase hover:bg-[#4c5d7d] hover:text-white transition duration-500 aos-init aos-animate">Add to Cart</button>
+      {% endif %}
+     </div>
+
+{% if user.is_authenticated %}
+      <button id="payBtn" data-key="{{ razorpay_key }}"
+    data-amount="{{ order.amount }}"
+    data-order="{{ order.id }}"
+    data-name="{{ product.name }}" class="mt-4 w-full text-center inline-block border-[#4c5d7d] bg-[#4c5d7d] border hover:border-[#cd865c] px-10 py-4 text-[#fff] tracking-wider uppercase hover:bg-[#cd865c] transition duration-500 aos-init aos-animate">Buy Now</button>
+{% else %}
+     <a href="{% url 'login' %}" class="mt-4 w-full text-center inline-block border-[#4c5d7d] bg-[#4c5d7d] border hover:border-[#cd865c] px-10 py-4 text-[#fff] tracking-wider uppercase hover:bg-[#cd865c] transition duration-500 aos-init aos-animate">Login to Buy</a>
+{% endif %}
+      <div class="delievery flex items-center gap-2 mt-4">
+<svg height="26px" width="26px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 511.999 511.999" xml:space="preserve" fill="#4c5d7d" stroke="#4c5d7d" stroke-width="0.0051199900000000005">
+
+<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+
+<g id="SVGRepo_iconCarrier"> <path style="fill:#ffffff;" d="M379.931,357.533h-29.75V134.815h77.591c42,0,76.041,34.041,76.041,76.03v146.688h-36.541"/> <polyline style="fill:#ffffff;" points="160.215,357.533 127.462,357.533 127.462,111.888 350.18,111.888 350.18,134.815 350.18,357.533 247.555,357.533 "/> <circle style="fill:#898686;" cx="203.885" cy="357.538" r="43.67"/> <circle style="fill:#EDEBEB;" cx="203.885" cy="357.538" r="12.922"/> <circle style="fill:#898686;" cx="423.601" cy="357.538" r="43.67"/> <path style="fill:#CEE5F2;" d="M471.059,244.536v-33.692c0-23.862-19.419-43.277-43.288-43.277h-44.838v76.969H471.059z"/> <circle style="fill:#EDEBEB;" cx="423.601" cy="357.538" r="12.922"/> <path d="M30.023,169.165h63.864c4.522,0,8.188-3.666,8.188-8.188s-3.666-8.188-8.188-8.188H30.023c-4.522,0-8.188,3.666-8.188,8.188 S25.501,169.165,30.023,169.165z"/> <path d="M99.346,267.417H40.941c-4.522,0-8.188,3.666-8.188,8.188c0,4.522,3.666,8.188,8.188,8.188h58.406 c4.522,0,8.188-3.666,8.188-8.188C107.535,271.083,103.868,267.417,99.346,267.417z"/> <path d="M8.188,234.667h69.323c4.522,0,8.188-3.666,8.188-8.188c0-4.522-3.666-8.188-8.188-8.188H8.188 c-4.522,0-8.188,3.666-8.188,8.188C0,231.001,3.666,234.667,8.188,234.667z"/> <path d="M77.511,332.919h-6.715c-4.522,0-8.188,3.666-8.188,8.188s3.666,8.188,8.188,8.188h6.715c4.522,0,8.188-3.666,8.188-8.188 S82.033,332.919,77.511,332.919z"/> <path d="M43.502,332.919H8.188c-4.522,0-8.188,3.666-8.188,8.188s3.666,8.188,8.188,8.188h35.314c4.522,0,8.188-3.666,8.188-8.188 S48.024,332.919,43.502,332.919z"/> <path d="M427.771,126.081h-69.403v-14.739c0-4.522-3.666-8.188-8.188-8.188h-126.93c-4.522,0-8.188,3.666-8.188,8.188 s3.666,8.188,8.188,8.188h118.741v179.341c0,4.522,3.666,8.188,8.188,8.188c4.522,0,8.188-3.666,8.188-8.188V142.457h69.403 c37.414,0,67.853,30.434,67.853,67.842v138.5h-20.818c-3.938-24.717-25.397-43.67-51.205-43.67s-47.267,18.953-51.205,43.67h-14.027 v-11.716c0-4.522-3.666-8.188-8.188-8.188c-4.522,0-8.188,3.666-8.188,8.188v11.716h-86.901 c-3.938-24.717-25.397-43.67-51.205-43.67s-47.268,18.953-51.205,43.67H135.65V119.53h54.848c4.522,0,8.188-3.666,8.188-8.188 c0-4.522-3.666-8.188-8.188-8.188h-63.036c-4.522,0-8.188,3.666-8.188,8.188v245.645c0,4.522,3.666,8.188,8.188,8.188h25.217 c3.938,24.717,25.397,43.67,51.205,43.67s47.268-18.953,51.205-43.67h117.304c3.938,24.717,25.397,43.67,51.205,43.67 s47.267-18.953,51.205-43.67h29.006c4.522,0,8.188-3.666,8.188-8.188V210.299C512,163.861,474.215,126.081,427.771,126.081z M203.885,392.469c-19.564,0-35.482-15.917-35.482-35.482s15.918-35.482,35.482-35.482s35.482,15.917,35.482,35.482 S223.449,392.469,203.885,392.469z M423.601,392.469c-19.562,0-35.478-15.913-35.482-35.475c0-0.002,0-0.004,0-0.007 s0-0.004,0-0.007c0.004-19.562,15.92-35.475,35.482-35.475c19.564,0,35.482,15.917,35.482,35.482S443.165,392.469,423.601,392.469z"/> <path d="M479.247,210.299c0-28.378-23.092-51.465-51.476-51.465h-44.838c-4.522,0-8.188,3.666-8.188,8.188v76.969 c0,4.522,3.666,8.188,8.188,8.188h88.126c4.522,0,8.188-3.666,8.188-8.188V210.299z M462.871,235.802h-71.75V175.21h36.65 c19.355,0,35.1,15.741,35.1,35.089V235.802z"/> <path d="M203.885,335.877c-11.64,0-21.11,9.47-21.11,21.11s9.47,21.11,21.11,21.11s21.11-9.47,21.11-21.11 S215.525,335.877,203.885,335.877z M203.885,361.721c-2.61,0-4.734-2.123-4.734-4.734s2.123-4.734,4.734-4.734 c2.61,0,4.734,2.123,4.734,4.734S206.496,361.721,203.885,361.721z"/> <path d="M423.601,335.877c-11.64,0-21.11,9.47-21.11,21.11s9.47,21.11,21.11,21.11s21.11-9.47,21.11-21.11 S435.241,335.877,423.601,335.877z M423.601,361.721c-2.61,0-4.734-2.123-4.734-4.734s2.123-4.734,4.734-4.734 s4.734,2.123,4.734,4.734S426.21,361.721,423.601,361.721z"/> <path d="M471.059,274.559c-4.522,0-8.188,3.666-8.188,8.188v20.743c0,4.522,3.666,8.188,8.188,8.188s8.188-3.666,8.188-8.188 v-20.743C479.247,278.225,475.581,274.559,471.059,274.559z"/> </g>
+
+</svg>
+<p class="text-[#4c5d7d]"><b>Estimated delivery:</b> 5-7 Days from order date.</p>
+      </div>
+      <div class="flex items-center gap-2 mt-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26px" height="26px" viewBox="0 0 24 24" fill="none" stroke="#4c5d7d">
+
+<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+
+<g id="SVGRepo_iconCarrier"> <path d="M22 12C22 8.22876 22 6.34315 20.8284 5.17157C19.6569 4 17.7712 4 14 4H10C6.22876 4 4.34315 4 3.17157 5.17157C2 6.34315 2 8.22876 2 12C2 15.7712 2 17.6569 3.17157 18.8284C4.34315 20 6.22876 20 10 20H14C17.7712 20 19.6569 20 20.8284 18.8284C21.4816 18.1752 21.7706 17.3001 21.8985 16" stroke="#4c5d7d" stroke-width="0.9600000000000002" stroke-linecap="round"/> <path d="M10 16H6" stroke="#4c5d7d" stroke-width="0.9600000000000002" stroke-linecap="round"/> <path d="M14 16H12.5" stroke="#4c5d7d" stroke-width="0.9600000000000002" stroke-linecap="round"/> <path d="M2 10L7 10M22 10L11 10" stroke="#4c5d7d" stroke-width="0.9600000000000002" stroke-linecap="round"/> </g>
+
+</svg>
+<p class="text-[#4c5d7d]"><b>Free Shipping & Returns:</b> On orders above $79</p>
+      </div>
+      <div class="payment mt-7">
+        <ul class="list list-payment flex gap-4 border rounded-sm border-grey-100 p-7" role="list"><li class="list-payment__item">
+    <svg class="icon icon--full-color" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-visa"><title id="pi-visa">Visa</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-.7.6-1.4.6-1.4 0-2.5.1-3.4-.2-.1.2-.1.2-.2.1zm-3.5.3c.1-.7.1-.7.2-1 .5-2.2 1-4.5 1.4-6.7.1-.2.1-.3.3-.3H18c-.2 1.2-.4 2.1-.7 3.2-.3 1.5-.6 3-1 4.5 0 .2-.1.2-.3.2M5 8.2c0-.1.2-.2.3-.2h3.4c.5 0 .9.3 1 .8l.9 4.4c0 .1 0 .1.1.2 0-.1.1-.1.1-.1l2.1-5.1c-.1-.1 0-.2.1-.2h2.1c0 .1 0 .1-.1.2l-3.1 7.3c-.1.2-.1.3-.2.4-.1.1-.3 0-.5 0H9.7c-.1 0-.2 0-.2-.2L7.9 9.5c-.2-.2-.5-.5-.9-.6-.6-.3-1.7-.5-1.9-.5L5 8.2z" fill="#142688"></path></svg>
+    </li><li class="list-payment__item">
+    <svg class="icon icon--full-color" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-master"><title id="pi-master">Mastercard</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><circle fill="#EB001B" cx="15" cy="12" r="7"></circle><circle fill="#F79E1B" cx="23" cy="12" r="7"></circle><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.3-3 3.4-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"></path></svg>
+    </li><li class="list-payment__item">
+    <svg class="icon icon--full-color" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pi-american_express" viewBox="0 0 38 24" width="38" height="24"><title id="pi-american_express">American Express</title><path fill="#000" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3Z" opacity=".07"></path><path fill="#006FCF" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32Z"></path><path fill="#FFF" d="M22.012 19.936v-8.421L37 11.528v2.326l-1.732 1.852L37 17.573v2.375h-2.766l-1.47-1.622-1.46 1.628-9.292-.02Z"></path><path fill="#006FCF" d="M23.013 19.012v-6.57h5.572v1.513h-3.768v1.028h3.678v1.488h-3.678v1.01h3.768v1.531h-5.572Z"></path><path fill="#006FCF" d="m28.557 19.012 3.083-3.289-3.083-3.282h2.386l1.884 2.083 1.89-2.082H37v.051l-3.017 3.23L37 18.92v.093h-2.307l-1.917-2.103-1.898 2.104h-2.321Z"></path><path fill="#FFF" d="M22.71 4.04h3.614l1.269 2.881V4.04h4.46l.77 2.159.771-2.159H37v8.421H19l3.71-8.421Z"></path><path fill="#006FCF" d="m23.395 4.955-2.916 6.566h2l.55-1.315h2.98l.55 1.315h2.05l-2.904-6.566h-2.31Zm.25 3.777.875-2.09.873 2.09h-1.748Z"></path><path fill="#006FCF" d="M28.581 11.52V4.953l2.811.01L32.84 9l1.456-4.046H37v6.565l-1.74.016v-4.51l-1.644 4.494h-1.59L30.35 7.01v4.51h-1.768Z"></path></svg>
+
+    </li><li class="list-payment__item">
+    <svg class="icon icon--full-color" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" width="38" height="24" role="img" aria-labelledby="pi-paypal"><title id="pi-paypal">PayPal</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path fill="#003087" d="M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.7-1.7-1-3.1-1h-4.1c-.3 0-.5.2-.6.5L14 15.6c0 .2.1.4.3.4H17l.4-3.4 1.8-2.2 4.7-2.1z"></path><path fill="#3086C8" d="M23.9 8.3l-.2.2c-.5 2.8-2.2 3.8-4.6 3.8H18c-.3 0-.5.2-.6.5l-.6 3.9-.2 1c0 .2.1.4.3.4H19c.3 0 .5-.2.5-.4v-.1l.4-2.4v-.1c0-.2.3-.4.5-.4h.3c2.1 0 3.7-.8 4.1-3.2.2-1 .1-1.8-.4-2.4-.1-.5-.3-.7-.5-.8z"></path><path fill="#012169" d="M23.3 8.1c-.1-.1-.2-.1-.3-.1-.1 0-.2 0-.3-.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2 0-.2.1-.2.1-.3.2-.3.4l-.7 4.4v.1c0-.3.3-.5.6-.5h1.3c2.5 0 4.1-1 4.6-3.8v-.2c-.1-.1-.3-.2-.5-.2h-.1z"></path></svg>
+    </li><li class="list-payment__item">
+    <svg class="icon icon--full-color" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24" aria-labelledby="pi-diners_club"><title id="pi-diners_club">Diners Club</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"></path><path d="M12 12v3.7c0 .3-.2.3-.5.2-1.9-.8-3-3.3-2.3-5.4.4-1.1 1.2-2 2.3-2.4.4-.2.5-.1.5.2V12zm2 0V8.3c0-.3 0-.3.3-.2 2.1.8 3.2 3.3 2.4 5.4-.4 1.1-1.2 2-2.3 2.4-.4.2-.4.1-.4-.2V12zm7.2-7H13c3.8 0 6.8 3.1 6.8 7s-3 7-6.8 7h8.2c3.8 0 6.8-3.1 6.8-7s-3-7-6.8-7z" fill="#3086C8"></path></svg>
+    </li><li class="list-payment__item">
+    <svg class="icon icon--full-color" viewBox="0 0 38 24" width="38" height="24" role="img" aria-labelledby="pi-discover" fill="none" xmlns="http://www.w3.org/2000/svg"><title id="pi-discover">Discover</title><path fill="#000" opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"></path><path d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32z" fill="#fff"></path><path d="M3.57 7.16H2v5.5h1.57c.83 0 1.43-.2 1.96-.63.63-.52 1-1.3 1-2.11-.01-1.63-1.22-2.76-2.96-2.76zm1.26 4.14c-.34.3-.77.44-1.47.44h-.29V8.1h.29c.69 0 1.11.12 1.47.44.37.33.59.84.59 1.37 0 .53-.22 1.06-.59 1.39zm2.19-4.14h1.07v5.5H7.02v-5.5zm3.69 2.11c-.64-.24-.83-.4-.83-.69 0-.35.34-.61.8-.61.32 0 .59.13.86.45l.56-.73c-.46-.4-1.01-.61-1.62-.61-.97 0-1.72.68-1.72 1.58 0 .76.35 1.15 1.35 1.51.42.15.63.25.74.31.21.14.32.34.32.57 0 .45-.35.78-.83.78-.51 0-.92-.26-1.17-.73l-.69.67c.49.73 1.09 1.05 1.9 1.05 1.11 0 1.9-.74 1.9-1.81.02-.89-.35-1.29-1.57-1.74zm1.92.65c0 1.62 1.27 2.87 2.9 2.87.46 0 .86-.09 1.34-.32v-1.26c-.43.43-.81.6-1.29.6-1.08 0-1.85-.78-1.85-1.9 0-1.06.79-1.89 1.8-1.89.51 0 .9.18 1.34.62V7.38c-.47-.24-.86-.34-1.32-.34-1.61 0-2.92 1.28-2.92 2.88zm12.76.94l-1.47-3.7h-1.17l2.33 5.64h.58l2.37-5.64h-1.16l-1.48 3.7zm3.13 1.8h3.04v-.93h-1.97v-1.48h1.9v-.93h-1.9V8.1h1.97v-.94h-3.04v5.5zm7.29-3.87c0-1.03-.71-1.62-1.95-1.62h-1.59v5.5h1.07v-2.21h.14l1.48 2.21h1.32l-1.73-2.32c.81-.17 1.26-.72 1.26-1.56zm-2.16.91h-.31V8.03h.33c.67 0 1.03.28 1.03.82 0 .55-.36.85-1.05.85z" fill="#231F20"></path><path d="M20.16 12.86a2.931 2.931 0 100-5.862 2.931 2.931 0 000 5.862z" fill="url(#pi-paint0_linear)"></path><path opacity=".65" d="M20.16 12.86a2.931 2.931 0 100-5.862 2.931 2.931 0 000 5.862z" fill="url(#pi-paint1_linear)"></path><path d="M36.57 7.506c0-.1-.07-.15-.18-.15h-.16v.48h.12v-.19l.14.19h.14l-.16-.2c.06-.01.1-.06.1-.13zm-.2.07h-.02v-.13h.02c.06 0 .09.02.09.06 0 .05-.03.07-.09.07z" fill="#231F20"></path><path d="M36.41 7.176c-.23 0-.42.19-.42.42 0 .23.19.42.42.42.23 0 .42-.19.42-.42 0-.23-.19-.42-.42-.42zm0 .77c-.18 0-.34-.15-.34-.35 0-.19.15-.35.34-.35.18 0 .33.16.33.35 0 .19-.15.35-.33.35z" fill="#231F20"></path><path d="M37 12.984S27.09 19.873 8.976 23h26.023a2 2 0 002-1.984l.024-3.02L37 12.985z" fill="#F48120"></path><defs><linearGradient id="pi-paint0_linear" x1="21.657" y1="12.275" x2="19.632" y2="9.104" gradientUnits="userSpaceOnUse"><stop stop-color="#F89F20"></stop><stop offset=".25" stop-color="#F79A20"></stop><stop offset=".533" stop-color="#F68D20"></stop><stop offset=".62" stop-color="#F58720"></stop><stop offset=".723" stop-color="#F48120"></stop><stop offset="1" stop-color="#F37521"></stop></linearGradient><linearGradient id="pi-paint1_linear" x1="21.338" y1="12.232" x2="18.378" y2="6.446" gradientUnits="userSpaceOnUse"><stop stop-color="#F58720"></stop><stop offset=".359" stop-color="#E16F27"></stop><stop offset=".703" stop-color="#D4602C"></stop><stop offset=".982" stop-color="#D05B2E"></stop></linearGradient></defs></svg>
+    </li></ul>
+      </div>
+  </div>
+</div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const decreaseBtn = document.querySelector(".decrease");
+    const increaseBtn = document.querySelector(".increase");
+    const quantitySpan = document.querySelector(".quantity");
+    const totalPrice = document.getElementById("total-price");
+    const basePrice = parseFloat(document.getElementById("base-price").value);
+
+    let quantity = 1;
+
+    function animateElement(element) {
+        element.classList.add("animate-pop");
+        setTimeout(() => {
+            element.classList.remove("animate-pop");
+        }, 200);
+    }
+
+    function updatePrice() {
+        let newTotal = basePrice * quantity;
+        totalPrice.textContent = newTotal.toFixed(2);
+        animateElement(totalPrice);
+    }
+
+    increaseBtn.addEventListener("click", function () {
+        quantity++;
+        quantitySpan.textContent = quantity;
+        animateElement(quantitySpan);
+        updatePrice();
+    });
+
+    decreaseBtn.addEventListener("click", function () {
+        if (quantity > 1) {
+            quantity--;
+            quantitySpan.textContent = quantity;
+            animateElement(quantitySpan);
+            updatePrice();
+        }
+    });
+});
+
+function changeMainMedia(element) {
+
+    const container = document.querySelector(".main-image");
+    const thumbnails = document.querySelectorAll(".thumb");
+
+    // Remove active border
+    thumbnails.forEach(thumb => {
+        thumb.classList.remove("border-[#4c5d7d]");
+        thumb.classList.add("border-transparent");
+    });
+
+    // Add active border
+    element.classList.remove("border-transparent");
+    element.classList.add("border-[#4c5d7d]");
+
+    // Start fade out
+    container.classList.remove("opacity-100");
+    container.classList.add("opacity-0");
+
+    setTimeout(() => {
+
+        container.innerHTML = "";
+
+        const isVideo = element.tagName.toLowerCase() === "video";
+
+        if (isVideo) {
+            const video = document.createElement("video");
+            video.src = element.querySelector("source").src;
+            video.controls = true;
+            video.autoplay = true;
+            video.className = "w-full h-auto";
+            container.appendChild(video);
+        } else {
+            const img = document.createElement("img");
+            img.src = element.src;
+            img.className = "w-full h-auto object-cover";
+            container.appendChild(img);
+        }
+
+        // Fade in
+        container.classList.remove("opacity-0");
+        container.classList.add("opacity-100");
+
+    }, 200);
+}
+
+const img = document.getElementById("mainImage");
+const lens = document.getElementById("lens");
+
+img.addEventListener("mouseenter", () => {
+    lens.style.display = "block";
+    lens.style.backgroundImage = `url(${img.src})`;
+});
+
+img.addEventListener("mouseleave", () => {
+    lens.style.display = "none";
+});
+
+img.addEventListener("mousemove", moveLens);
+
+function moveLens(e) {
+
+    const rect = img.getBoundingClientRect();
+
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+
+    const lensSize = lens.offsetWidth / 2;
+
+    // Prevent lens from going outside
+    x = Math.max(lensSize, Math.min(x, rect.width - lensSize));
+    y = Math.max(lensSize, Math.min(y, rect.height - lensSize));
+
+    lens.style.left = (x - lensSize) + "px";
+    lens.style.top = (y - lensSize) + "px";
+
+    const zoomLevel = 2; // Increase for more zoom
+
+    lens.style.backgroundSize =
+        rect.width * zoomLevel + "px " +
+        rect.height * zoomLevel + "px";
+
+    lens.style.backgroundPosition =
+        "-" + (x * zoomLevel - lensSize) + "px -" +
+        (y * zoomLevel - lensSize) + "px";
+}
+
+
+
+
+//Razorpay
+const payBtn = document.getElementById("payBtn");
+
+console.log("Order ID:", "{{ order.id }}"); // DEBUG
+
+payBtn.onclick = function(e){
+
+    console.log("Clicked Buy Now");
+
+    var options = {
+        key: "{{ razorpay_key }}",
+        amount: "{{ order.amount }}",
+        currency: "INR",
+        name: "Velvet Vault",
+        description: "{{ product.name }}",
+        order_id: "{{ order.id }}",
+
+        handler: function (response){
+            console.log("SUCCESS:", response);
+
+            fetch("/payment/verify/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: new URLSearchParams(response)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success"){
+                    window.location.href = "/success/";
+                } else {
+                    alert("Payment Failed");
+                }
+            });
+        }
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.open();
+
+    e.preventDefault();
+}
+</script>
+{% endblock %}
