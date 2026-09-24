@@ -45,9 +45,9 @@ https://github.com/Prince3052/Velvet-Vault/
 **How to Run This Project**
  
 ### 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+git clone https://github.com/Prince3052/Velvet-Vault/
 ### 2. Go to the project directory
-cd YOUR_REPOSITORY
+cd Velvet-Vault
 ### 3. Create a virtual environment
 python -m venv venv
 ### 4. Activate the virtual environment
